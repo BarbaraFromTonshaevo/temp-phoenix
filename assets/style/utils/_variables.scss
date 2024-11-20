@@ -1,0 +1,97 @@
+@use "mixin" as m;
+
+:root {
+    --btn-prim-bg: #CB2D2D;
+    --btn-prim-text: #FFFFFF;
+    --btn-prim-border: #CB2D2D;
+    --btn-prim-icon: #FFFFFF;
+
+    --btn-prim-bg-hover: #A30505;
+    --btn-prim-text-hover: #FFFFFF;
+    --btn-prim-border-hover: #A30505;
+    --btn-prim-icon-hover: #FFFFFF; 
+
+    --btn-prim-bg-focus: #CB2D2D;
+    --btn-prim-text-focus: #FFFFFF;
+    --btn-prim-border-focus: #CB2D2D;
+    --btn-prim-icon-focus: #FFFFFF; 
+
+    --btn-prim-bg-disabled: #EFEFEF;
+    --btn-prim-text-disabled: #818181;
+    --btn-prim-border-disabled: #EFEFEF;
+    --btn-prim-icon-disabled: #818181;  
+
+    --footer-bg: #F5F5F5;
+    --header-bg: #F5F5F5;
+
+    --text-primary: #303239;
+    --text-secondary: #595B61;
+    --text-additional: #C5C5C5;
+    --text-hint: #585A61;
+    --text-accent: #CB2D2D;
+    --text-accent-secondary: #FFD2DA;
+    --text-contrast: #FFFFFF;
+    --text-contrast-secondary: #818389;
+    --text-contrast-additional: #F1D1D3;
+
+    --bg-primary: #FFFFFF;
+    --bg-primary-gradient: linear-gradient(154deg, #B71921 37.74%, #E94B53 101%);
+    --bg-secondary: #F5F5F5;
+    --bg-accent: #CB2D2D;
+
+    --btn-primary: #CB2D2D;
+    --btn-primary-hover: #A30505;
+    --btn-secondary: #F5F5F5;
+    --btn-secondary-hover: #CDCDCD;
+
+    --stroke-primary: #F5F5F5;
+    --stroke-secondary: #D7D7D7;
+    --stroke-accent: #CB2D2D;
+    --stroke-hover: #CB2D2D;
+
+    --icons-contrast: #303239;
+    --icons-contrast-light: #FFFFFF;
+    --icons-accent: #CB2D2D;
+    --icons-disabled:#D7D7D7;
+
+    --system-alert: #CB2D2D;
+
+    --marker: #CB2D2D;
+
+    --time: 0.5s;
+    --br-xs: 8px;
+    --br-s: 10px;
+
+    --section-offset: 160px;
+
+    --title-offset-m: 60px;
+
+    --header-height: 104px;
+    --header-main-gap: 80px;
+    --header-index: 2;
+}
+
+@include m.laptop {
+    :root {
+        
+    }
+}
+
+@include m.tablet {
+    :root {
+        --section-offset: 80px;
+        --title-offset-m: 30px;
+    }
+}
+
+@include m.tablet-s {
+    :root {
+      --header-height: 92px;
+    }
+}
+
+@include m.mobile {
+    :root {
+       
+    }
+}
