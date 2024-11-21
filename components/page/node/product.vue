@@ -1,0 +1,9 @@
+<template>
+    <div>
+        <h1 class="title-h1">Product card page</h1>
+    </div>
+</template>
+
+<script setup>
+
+</script>
