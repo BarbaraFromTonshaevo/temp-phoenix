@@ -6,8 +6,8 @@
       <slot/>
   </div>
   <div v-else>
-    <UiError404 v-if="props.error.statusCode == 404"/>
-    <UiErrorMessage v-else :message="props.error.cause.message"/>
+    <AppError404 v-if="props.error.statusCode == 404"/>
+    <AppErrorMessage v-else :message="props.error.cause.message"/>
   </div>
 </template>
 

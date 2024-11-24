@@ -1,6 +1,5 @@
-
 <template>
-    <UiError title="Ошибка" :message="message"/>
+    <AppError title="Ошибка" :message="message"/>
 </template>
 
 
