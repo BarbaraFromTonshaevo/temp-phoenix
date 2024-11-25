@@ -90,11 +90,7 @@ export default defineNuxtConfig({
       },
     },
   },
-  middleware: [
-    // "redirect", 
-    "header-visibility", 
-    // "menu-visibility"
-  ],
+
   ssr: true,
   modules: [
     '@nuxt/eslint', 

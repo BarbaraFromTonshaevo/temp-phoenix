@@ -1,14 +1,14 @@
 <template>
-  <main class="main" :class="{ front: isFront }">
+  <main class="main">
     <div v-if="status === 'pending' || status === 'fetching'">
       <div class="loader"></div>
     </div>
     <div v-else-if="status === 'success'">
-      <h1>Dynamic page for: {{ pagePar }}</h1>
-      <!-- <component
-            :is="page"
-            v-if="page"
-        /> -->
+      <div class="container">
+        <h1>Dynamic page for: {{ route.fullPath }}</h1>
+        <p>{{ componentName }}</p>
+        <component v-if="componentToRender" :is="componentToRender" />
+      </div>
     </div>
     <div v-else>
       <div class="container">
@@ -21,59 +21,65 @@
 </template>
 
 <script setup>
+// НУЖНО!!! Учесть query параметры
+import { shallowRef, watch, computed, defineAsyncComponent } from "vue";
 const route = useRoute();
-const pagePar = route.params.page;
-const page = shallowRef(null);
+
 // опеределяем по какому апи делать запрос
 const apiUrl =
-  pagePar === ""
-    ? `${useRuntimeConfig().public.API_BASE_URL}wsapi/packs/front`
-    : `${useRuntimeConfig().public.API_BASE_URL}${pagePar}?_format=json`;
+  route.fullPath === "/"
+    ? `${useRuntimeConfig().public.apiBase}/wsapi/packs/front`
+    : `${useRuntimeConfig().public.apiBase}${route.fullPath}?_format=json`;
 
-const {
-  data: front,
-  status,
-  error,
-  refresh,
-  clear,
-} = await useLazyAsyncData(
-  "front",
+// имя кэша
+const cacheName = route.fullPath === "/" ? "front" : route.fullPath;
 
-  () =>
-    $fetch(apiUrl,),
+// компонента
+const componentToRender = shallowRef(null);
+
+const { data, status, error } = await useLazyAsyncData(
+  "cacheName",
+  () => $fetch(apiUrl),
+  { deep: true }
 );
 
-//данные для главной страницы
-// const indexProducts = ref(null);
+const componentName = computed(() => {
+  // при формировании адреса и имени компоненты учитывать написания snake-case или camel-case
+  if (data.value) {
+    let nameStr = "";
+    if (route.fullPath === "/") {
+      // nameStr = "front";
+      nameStr = "front";
+    } else {
+      if (data.value.data.bundle) {
+        // Материал пример: /page/node/[page].vue
+        // nameStr = "page" + data.value.data.entity_type + data.value.data.bundle;
+        nameStr = data.value.data.entity_type + '/' + data.value.data.bundle;
+      } else if (data.value.taxonomy_term) {
+        // Таксономия пример: /page/taxonomy_term/[view].vue
+        // nameStr =
+        //   "page" + data.value.taxonomy_term.bundle + data.value.meta.view_id;
+          nameStr =
+          data.value.taxonomy_term.bundle + '/' + data.value.meta.view_id ;
+      } else if (data.value.meta.view_id) {
+        // Представления пример: /page/view/[view].vue
+        // nameStr = "page" + data.value.meta.view_id;
+        nameStr = "view/" + data.value.meta.view_id;
+      } else {
+        nameStr = "";
+      }
+    }
+    return nameStr;
+  }
+  return "";
+});
 
-// const pageData = ref(null);
+watch(componentName, (newValue, oldValue) => {
+  if(newValue){
+    if(newValue !== ''){
+      componentToRender.value = defineAsyncComponent(() => import( `~/component/page/${newValue}.vue`  /* @vite-ignore */))
+    }
+  }
+},{ immediate: true});
 
-// if (pagePar === '') {
-//     //главная страница
-//     const hehe = await $fetch(`${useRuntimeConfig().public.API_BASE_URL}wsapi/packs/front`);
-
-//     indexProducts.value = hehe.data.products;
-//     console.log('hehe index', hehe);
-//     page.value = IndexPage;
-// }
-// else {
-//     //все остальные страницы
-//     const hehe = await $fetch(`${useRuntimeConfig().public.API_BASE_URL}${pagePar}?_format=json`);
-//     console.log(`hehe ${route.params.pagePar}`, hehe, `${useRuntimeConfig().public.API_BASE_URL}${pagePar}?_format=json`);
-
-//     pageData.value = hehe;
-
-//     if (hehe.data.bundle) {
-//         if (hehe.data.bundle === 'contacts') page.value = ContactsPage;
-
-//         if (hehe.data.bundle === 'company') page.value = CompanyPage;
-
-//         if (hehe.data.bundle === 'programs') page.value = ProgramsPage;
-
-//     }
-//     else if (hehe.taxonomy_term.bundle) {
-//         if (hehe.taxonomy_term.bundle === 'catalog') page.value = CatalogPage;
-//     }
-
-// }
 </script>
