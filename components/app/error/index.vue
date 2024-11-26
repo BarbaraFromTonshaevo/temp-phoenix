@@ -1,6 +1,6 @@
 <template>
 	<div class="not-found__container container">
-		<img v-if="img" class="not-found__img" :src="img" alt="" />
+		<img v-if="img" class="not-found__img" :src="img" alt="">
 		<h1 class="not-found__title page-title">{{ title }}</h1>
 		<p class="not-found__descr">{{ message }}</p>
     <ButtonBase mode="nuxt-link" link="/" name="primary" class="not-found__btn">Перейти на главную</ButtonBase>

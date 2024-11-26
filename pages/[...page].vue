@@ -1,10 +1,10 @@
 <template>
   <main class="main" :class="{'main--front': isFront}">
     <div v-if="status === 'pending' || status === 'fetching'">
-      <div class="loader"></div>
+      <UiLoader/>
     </div>
     <div v-else-if="status === 'success'">
-        <component v-if="componentToRender" :is="componentToRender" :data="data"/>
+        <component :is="componentToRender" v-if="componentToRender"  :data="data"/>
     </div>
     <div v-else>
       <AppError404 v-if="error.statusCode == 404"/>
@@ -82,7 +82,7 @@ const componentsMap = {
 // меняется имя компоненты - меняется страница
 watch(
   componentName,
-  (newValue, oldValue) => {
+  (newValue) => {
     if (newValue) {
       setMetaTags(data.value.metatag.html_head);
       if (newValue !== "") {

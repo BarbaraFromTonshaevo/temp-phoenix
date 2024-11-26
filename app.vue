@@ -1,8 +1,17 @@
 <template>
   <NuxtLayout>
     <NuxtLoadingIndicator />
+    <NuxtRouteAnnouncer />
     <NuxtErrorBoundary>
       <NuxtPage />
+      <template #error="{ error }">
+        <div class="container">
+          <h1 class="title-h1">Ошибка</h1>
+          <p>
+            <code>{{ error }}</code>
+          </p>
+        </div>
+      </template>
     </NuxtErrorBoundary>
   </NuxtLayout>
 </template>

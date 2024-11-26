@@ -1,5 +1,8 @@
 <template>
-  <header class="header" :class="{ 'header--hidden': mainInfoStore.headerIsHidden }">
+  <header
+    class="header"
+    :class="{ 'header--hidden': mainInfoStore.headerIsHidden }"
+  >
     <div class="header__body">
       <div class="header__container container">
         <NuxtLink to="/" class="header__logo">
