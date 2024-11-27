@@ -17,14 +17,17 @@
 </template>
 
 <script setup>
+import { useMainInfoStore } from "@/stores/mainInfo";
+
+const mainInfoStore = useMainInfoStore();
+const { data: mainInfoData } = await useFetch(`${useRuntimeConfig().public.apiBase}/wsapi/packs/main_info`, {});
+mainInfoStore.setHeaderData(mainInfoData.value);
+
 const device = useDevice();
 const layout = ref(device.isDesktop === true ? "scroller" : "default");
 
 
-import { useMainInfoStore } from "@/stores/mainInfo";
-const mainInfoStore = useMainInfoStore();
-const { data: mainInfoData } = await useFetch(`${useRuntimeConfig().public.apiBase}/wsapi/packs/main_info`, {});
-mainInfoStore.setHeaderData(mainInfoData.value);
+
 
 //аналитика
 // useHead({
@@ -44,6 +47,7 @@ mainInfoStore.setHeaderData(mainInfoData.value);
 @use "assets/style/components/title";
 @use "assets/style/components/text";
 @use "assets/style/components/section";
+@use "assets/style/components/image";
 
 .page-enter-active,
 .page-leave-active {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppHeader />
+    <AppHeader :is-transparent="isHeaderTransparent"/>
     <div ref="scroller" class="scroller">
       <div class="page-content">
         <slot />
@@ -17,10 +17,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Scrollbar, { ScrollbarPlugin } from "smooth-scrollbar";
 import { useScrollbarStore } from "@/stores/scrollbar";
 
+const route = useRoute();
+const isHeaderTransparent = ref(route.fullPath == "/"? true: false);
+const isHeaderVisible = ref(true);
+
 const scrollbarStore = useScrollbarStore();
 const scroller = ref(null);
-const isHeaderVisible = ref(true);
-const isHeaderTransparent = ref(false);
 let bodyScrollBar;
 
 onMounted(() => {

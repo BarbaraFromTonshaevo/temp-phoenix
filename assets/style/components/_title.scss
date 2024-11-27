@@ -6,33 +6,37 @@
 .title-h4,
 .title-h5,
 .title-h6 {    
-    font-family: 'Onest', sans-serif;
+    font-family: var(--font-title);
     font-weight: 400;
+    strong{
+        font-weight: 400;
+        color: var(--text-accent);
+    }
 }
 
 .title-h1 {
-    font-size: 78px;
-    line-height: 100%;
+    font-size: 90px;
+    line-height: 1;
 }
 
 .title-h2 {
-    font-size: 44px;
-    line-height: 115%;
+    font-size: 60px;
+    line-height: 1.1;
 }
 
 .title-h3 {
-    font-size: 32px;
-    line-height: 110%;
+    font-size: 46px;
+    line-height: 1.1;
 }
 
 .title-h4 {
-    font-size: 24px;
-    line-height: 115%;
+    font-size: 36px;
+    line-height: 1.1;
 }
 
 .title-h5 {
-    font-size: 20px;
-    line-height: 110%;
+    font-size: 30px;
+    line-height: 1.1;
 }
 
 .title-color {
@@ -43,7 +47,7 @@
 
 @include m.laptop {
     .title-h1 {
-        font-size: 58px;
+        font-size: 60px;
     }
 
     .title-h2 {
@@ -55,17 +59,17 @@
     }
 
     .title-h4 {
-        font-size: 22px;
+        font-size: 26px;
     }
 
     .title-h5 {
-        font-size: 18px;
+        font-size: 24px;
     }
 }
 
 @include m.tablet {
     .title-h1 {
-        font-size: 38px;
+        font-size: 40px;
     }
 
     .title-h2 {
@@ -83,4 +87,10 @@
     // .title-h5 {
     //     font-size: 18px;
     // }
+}
+
+@include m.mobile{
+    .title-h1 {
+        font-size: 28px;
+    }
 }

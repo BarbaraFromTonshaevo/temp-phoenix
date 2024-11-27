@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppHeader/>
+    <AppHeader :is-transparent="isHeaderTransparent"/>
     <div class="page-content">
       <slot />
     </div>
@@ -9,9 +9,11 @@
 </template>
 
 <script setup>
+import {ref} from 'vue'
 import { useMainInfoStore } from "~/stores/mainInfo";
 const mainInfoStore = useMainInfoStore();
-
+const route = useRoute();
+const isHeaderTransparent = ref(route.fullPath == "/"? true: false);
 let lastScrollY = 0; // Для хранения предыдущей позиции прокрутки
 const handleScroll = () => {
   const currentScrollY = window.scrollY; // Текущая позиция прокрутки

@@ -17,7 +17,7 @@
 // НУЖНО!!! Учесть query параметры
 import { shallowRef, watch, computed, defineAsyncComponent } from "vue";
 const route = useRoute();
-const isFront = ref(false);
+const isFront = ref(route.fullPath === "/"? true: false);
 
 // опеределяем по какому апи делать запрос
 const apiUrl =
@@ -99,5 +99,7 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-
+.main--front{
+  padding: 0;
+}
 </style>

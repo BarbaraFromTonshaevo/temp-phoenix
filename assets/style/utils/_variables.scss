@@ -69,39 +69,44 @@
     --footer-bg: #F5F5F5;
     --header-bg: #F5F5F5;
 
-    --text-primary: #303239;
-    --text-secondary: #595B61;
-    --text-additional: #C5C5C5;
-    --text-hint: #585A61;
-    --text-accent: #CB2D2D;
-    --text-accent-secondary: #FFD2DA;
-    --text-contrast: #FFFFFF;
-    --text-contrast-secondary: #818389;
-    --text-contrast-additional: #F1D1D3;
+    // Common colors
 
+    --text-primary: #433C3C;
+    --text-primary-additional: #303030;
+    --text-default: #818181;
+    --text-default-secondary: #666666;
+    --text-default-additional: #B4B4B4;
+    --text-contrast: #FFFFFF;
+    --text-accent: #CB2D2D;
+    --text-footer: #CBCBCB;
+    
     --bg-primary: #FFFFFF;
-    --bg-primary-gradient: linear-gradient(154deg, #B71921 37.74%, #E94B53 101%);
-    --bg-secondary: #F5F5F5;
-    --bg-accent: #CB2D2D;
+    --bg-secondary: #EFEFEF;
+    --bg-modal: rgba(30, 30, 30, 0.8);
 
     --btn-primary: #CB2D2D;
     --btn-primary-hover: #A30505;
-    --btn-secondary: #F5F5F5;
-    --btn-secondary-hover: #CDCDCD;
+    --btn-secondary: #EFEFEF;
+    --btn-secondary-hover: #CB2D2D;
+    --btn-tertiary: #FFFFFF;
+    --btn-disabled: #E0E0E0;
+    --btn-dark: rgba(208, 208, 208, 0.1);
 
-    --stroke-primary: #F5F5F5;
-    --stroke-secondary: #D7D7D7;
-    --stroke-accent: #CB2D2D;
-    --stroke-hover: #CB2D2D;
+    --stroke-primary: #E0E0E0;
+    --stroke-secondary: #A1A1A1;
+    --stroke-tertiary: #EDEDED;
+    --stroke-contrast: #CB2D2D;
 
-    --icons-contrast: #303239;
-    --icons-contrast-light: #FFFFFF;
-    --icons-accent: #CB2D2D;
-    --icons-disabled:#D7D7D7;
+    --icons-white: #FFFFFF;;
+    --icons-black: #433C3C;
+    --icons-red: #CB2D2D;
+    --icons-grey: #B4B4B4;
 
     --system-alert: #CB2D2D;
 
     --marker: #CB2D2D;
+
+    // Number variables
 
     --time: 0.5s;
     --br-xs: 8px;
@@ -114,6 +119,11 @@
     --header-height: 104px;
     --header-main-gap: 80px;
     --header-index: 2;
+
+    // Шрифты
+
+    --font-title: 'Mariupol', sans-serif;
+    --font: 'Raleway', sans-serif;
 }
 
 @include m.laptop {

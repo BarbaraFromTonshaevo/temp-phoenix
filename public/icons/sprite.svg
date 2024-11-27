@@ -44,6 +44,10 @@
     <symbol viewBox="0 0 16 16" id="arrow-filter">
         <path d="M7.99805 11L4.53395 6.5L11.4621 6.5L7.99805 11Z" />
     </symbol>
+    <symbol viewBox="0 0 40 40" id="plus">
+        <rect x="19" y="5" width="2" height="30" rx="1" />
+        <rect x="35" y="19" width="2" height="30" rx="1" transform="rotate(90 35 19)" />
+    </symbol>
     <symbol viewBox="0 0 16 16" id="dropdown">
         <path d="M7.99805 11L4.53395 6.5L11.4621 6.5L7.99805 11Z" />
     </symbol>

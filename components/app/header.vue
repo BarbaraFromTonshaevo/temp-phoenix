@@ -1,12 +1,16 @@
 <template>
   <header
     class="header"
-    :class="{ 'header--hidden': mainInfoStore.headerIsHidden }"
+    :class="[
+      { 'header--hidden': mainInfoStore.headerIsHidden },
+      { 'header--transparent': isTransparent },
+    ]"
   >
     <div class="header__body">
       <div class="header__container container">
         <NuxtLink to="/" class="header__logo">
           <img src="/icons/logo.svg" class="header__logo-dark" />
+          <img src="/icons/logo-light.svg" class="header__logo-light" />
         </NuxtLink>
         <nav
           v-if="!isMobileOrTablet && mainInfoStore.isReady"
@@ -103,7 +107,11 @@
 <script setup>
 import { ref } from "vue";
 import { useMainInfoStore } from "@/stores/mainInfo";
-
+defineProps({
+  isTransparent: {
+    type: Boolean,
+  },
+});
 const mainInfoStore = useMainInfoStore();
 const { isMobileOrTablet } = useDevice();
 const isMenuActive = ref(false);
@@ -121,6 +129,19 @@ const isMenuActive = ref(false);
     transition: top var(--time);
     &--hidden {
       top: calc((-1) * var(--header-height));
+    }
+    &--transparent {
+      .header__body {
+        background-color: transparent;
+        color: white;
+        border-color: var(--stroke-header);
+      }
+      .header__logo-dark {
+        opacity: 0;
+      }
+      .header__logo-light {
+        opacity: 1;
+      }
     }
   }
 
