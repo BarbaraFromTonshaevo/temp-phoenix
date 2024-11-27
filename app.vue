@@ -19,14 +19,12 @@
 <script setup>
 const device = useDevice();
 const layout = ref(device.isDesktop === true ? "scroller" : "default");
-import { onMounted } from "vue";
 
-// import { useMainInfoStore } from "@/stores/mainInfo";
-// const mainInfoStore = useMainInfoStore();
-// const { data: mainInfoData } = await useFetch("/wsapi/packs/maininfo", {
-//   baseURL: useRuntimeConfig().public.apiBase,
-// });
-// mainInfo.setHeaderData(mainInfoData.value);
+
+import { useMainInfoStore } from "@/stores/mainInfo";
+const mainInfoStore = useMainInfoStore();
+const { data: mainInfoData } = await useFetch(`${useRuntimeConfig().public.apiBase}/wsapi/packs/main_info`, {});
+mainInfoStore.setHeaderData(mainInfoData.value);
 
 //аналитика
 // useHead({
