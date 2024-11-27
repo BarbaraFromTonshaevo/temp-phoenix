@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout>
+  <NuxtLayout :name="layout">
     <NuxtLoadingIndicator />
     <NuxtRouteAnnouncer />
     <NuxtErrorBoundary>
@@ -17,7 +17,10 @@
 </template>
 
 <script setup>
-// import { onMounted } from "vue";
+const device = useDevice();
+const layout = ref(device.isDesktop === true ? "scroller" : "default");
+import { onMounted } from "vue";
+
 // import { useMainInfoStore } from "@/stores/mainInfo";
 // const mainInfoStore = useMainInfoStore();
 // const { data: mainInfoData } = await useFetch("/wsapi/packs/maininfo", {

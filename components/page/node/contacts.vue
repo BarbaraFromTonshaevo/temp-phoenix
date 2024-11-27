@@ -12,6 +12,7 @@ defineProps({
         default: ()=>{},
     }
 })
+console.log("contacts");
 </script>
 
 <style lang="scss" scoped></style>
