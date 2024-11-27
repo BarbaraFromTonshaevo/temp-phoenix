@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <main>
+    <main class="main">
       <section v-if="error.statusCode == 404" class="not-found">
         <div class="not-found__container container">
           <img

@@ -21,7 +21,7 @@
 
 <script setup>
 defineProps({
-  data: {
+  breadcrumbs: {
     type: Array, // указываем, что это массив
     required: true,
     validator: function (value) {
@@ -29,11 +29,12 @@ defineProps({
         return typeof item.url === "string" && typeof item.text === "string";
       });
     },
+    default: () => [],
   },
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .breadcrumbs {
   margin-bottom: 50px;
   &__list {

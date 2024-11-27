@@ -5,12 +5,14 @@
     <NuxtErrorBoundary>
       <NuxtPage />
       <template #error="{ error }">
-        <div class="container">
-          <h1 class="title-h1">Ошибка</h1>
-          <p>
-            <code>{{ error }}</code>
-          </p>
-        </div>
+        <main class="main">
+          <div class="container">
+            <h1 class="title-h1">Ошибка</h1>
+            <p>
+              <code>{{ error }}</code>
+            </p>
+          </div>
+        </main>
       </template>
     </NuxtErrorBoundary>
   </NuxtLayout>
@@ -20,14 +22,14 @@
 import { useMainInfoStore } from "@/stores/mainInfo";
 
 const mainInfoStore = useMainInfoStore();
-const { data: mainInfoData } = await useFetch(`${useRuntimeConfig().public.apiBase}/wsapi/packs/main_info`, {});
+const { data: mainInfoData } = await useFetch(
+  `${useRuntimeConfig().public.apiBase}/wsapi/packs/main_info`,
+  {}
+);
 mainInfoStore.setHeaderData(mainInfoData.value);
 
 const device = useDevice();
 const layout = ref(device.isDesktop === true ? "scroller" : "default");
-
-
-
 
 //аналитика
 // useHead({
