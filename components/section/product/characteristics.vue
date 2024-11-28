@@ -2,7 +2,7 @@
   <section class="product-char">
     <h2 class="product-char__title title-h3">Характеристики</h2>
     <div class="product-char__list">
-      <UiDoubleStroke v-for="item of properties" :title="item.field_name[0]">{{ item.field_value[0] }}</UiDoubleStroke>
+      <UiDoubleStroke v-for="item of properties" :key="item.field_name[0]" :title="item.field_name[0]">{{ item.field_value[0] }}</UiDoubleStroke>
     </div>
   </section>
 </template>

@@ -2,12 +2,12 @@
     <section class="product-categories">
         <h2 class="product-categories__title title-h3">Другие категории</h2>
         <ul class="product-categories__list">
-            <li class="product-categories__item" v-for="category of properties" :key="category.title">
+            <li v-for="category of properties" :key="category.title" class="product-categories__item">
                 <NuxtLink :to="category.url" class="product-categories__link">
                     <div class="product-categories__text">{{ category.title }}</div>
                     <div class="product-categories__icon">
                         <svg>
-                            <use xlink:href="/icons/sprite.svg#arrow-short"></use>
+                            <use xlink:href="/icons/sprite.svg#arrow-short"/>
                         </svg>
                     </div>
                 </NuxtLink>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   properties: {
     type: Array,
     required: true,

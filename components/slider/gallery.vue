@@ -1,19 +1,19 @@
 <template>
-  <div class="slider-gallery__wrap" ref="wrap">
+  <div ref="wrap" class="slider-gallery__wrap">
     <SliderTop :title="title" />
-    <div class="slider-gallery swiper" ref="slider">
+    <div ref="slider" class="slider-gallery swiper">
       <div class="swiper-wrapper">
         <div
-          class="slider-gallery__slide swiper-slide"
           v-for="(slide, index) in slides"
           :key="'slide' + index"
+          class="slider-gallery__slide swiper-slide"
         >
           <a
             :href="slide.raw"
             data-fancybox="gallery"
             class="slider-gallery__fancybox style-picture-img"
             v-html="slide.markup"
-          ></a>
+          />
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@ import "swiper/css";
 
 import { ref, onMounted } from "vue";
 
-const props = defineProps({
+defineProps({
   slides: {
     type: Array,
     required: true,

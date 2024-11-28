@@ -5,13 +5,13 @@
         <SliderDouble class="product-top__slider" :slides="slides" />
         <div class="product-top__info">
           <h5 class="product-top__title title-h5">Описание</h5>
-          <div class="product-top__descr" v-html="description"></div>
+          <div class="product-top__descr" v-html="description"/>
           <div class="product-top__stroke">
-            <img src="/icons/compass.svg" alt="" />
+            <img src="/icons/compass.svg" alt="" >
             Бесплатное проектирование
           </div>
           <div class="product-top__stroke">
-            <img src="/icons/handshake.svg" alt="" />
+            <img src="/icons/handshake.svg" alt="" >
             Помогаем с оформлением лизинга
           </div>
           <ButtonBase
@@ -28,7 +28,7 @@
 
 <script setup>
 const { isMobile } = useDevice();
-const props = defineProps({
+defineProps({
   slides: {
     type: Array,
     required: true,

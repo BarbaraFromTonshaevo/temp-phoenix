@@ -6,7 +6,7 @@
     :region="data.data.field_region[0].markup"
     :image="data.data.field_image[0].markup"
   />
-  <ContainerNavigation :navigationList="nav" class="product__body container">
+  <ContainerNavigation :navigation-list="nav" class="product__body container">
     <SectionProjectDescription
       id="description"
       :properties="data.data.body[0]"
@@ -24,8 +24,8 @@
       }"
     />
     <SectionProjectSheathing
-      id="sheathing"
       v-if="data.data.field_show_sheathing[0] === '0' ? false : true"
+      id="sheathing"
     />
     <SectionProjectGallery id="gallery" :properties="data.data.field_gallery" />
     <SectionProjectVolume
@@ -36,7 +36,7 @@
         )
       "
     />
-    <SectionProjectVideo id="video" v-if="video" :properties="video" />
+    <SectionProjectVideo v-if="video" id="video" :properties="video" />
     <SectionProjectOther id="other" :properties="data.data.field_projects" />
   </ContainerNavigation>
 </template>

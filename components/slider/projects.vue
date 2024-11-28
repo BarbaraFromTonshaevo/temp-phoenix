@@ -1,17 +1,17 @@
 <template>
-  <div class="projects-slider__wrap" ref="wrap">
-    <SliderTop :title="title" :titleSize="titleSize" />
-    <div class="projects-slider swiper" ref="slider">
+  <div ref="wrap" class="projects-slider__wrap">
+    <SliderTop :title="title" :title-size="titleSize" />
+    <div ref="slider" class="projects-slider swiper">
       <div class="projects-slider__wrapper swiper-wrapper">
         <div
-          class="projects-slider__slide swiper-slide"
           v-for="slide of slides"
           :key="slide.title"
+          class="projects-slider__slide swiper-slide"
         >
           <div
             class="projects-slider__img image-style-cover"
             v-html="slide.field_image[0].markup"
-          ></div>
+          />
           <div class="projects-slider__info">
             <div class="projects-slider__text">{{ slide.title }}</div>
             <ButtonBase
@@ -30,7 +30,13 @@
 </template>
 
 <script setup>
-const props = defineProps({
+import Swiper from "swiper";
+import "swiper/css";
+import "swiper/css/effect-fade";
+import { Navigation, EffectFade } from "swiper/modules";
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
+defineProps({
   slides: {
     type: Array,
     required: true,
@@ -47,12 +53,6 @@ const props = defineProps({
     default: "h3",
   },
 });
-
-import Swiper from "swiper";
-import "swiper/css";
-import "swiper/css/effect-fade";
-import { Navigation, EffectFade } from "swiper/modules";
-import { ref, onMounted, onBeforeUnmount } from "vue";
 
 const slider = ref(null),
   wrap = ref(null),

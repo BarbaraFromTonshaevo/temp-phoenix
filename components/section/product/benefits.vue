@@ -3,9 +3,9 @@
     <h2 class="product-benefits__title title-h3">Преимущества</h2>
     <ol class="product-benefits__list">
       <li
-        class="product-benefits__item"
         v-for="(benefit, index) of properties"
         :key="benefit"
+        class="product-benefits__item"
       >
         <div class="product-benefits__num">
           {{ index >= 9 ? index + 1 : "0" + (index + 1) }}
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   properties: {
     type: Array,
     required: true,

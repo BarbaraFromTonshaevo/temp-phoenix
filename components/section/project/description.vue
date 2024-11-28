@@ -1,14 +1,14 @@
 <template>
   <section>
     <h3 class="section-title title-h3">Описание проекта</h3>
-    <ContainerContent class="project-description__content" v-if="properties">
-      <div v-html="properties"></div>
+    <ContainerContent v-if="properties" class="project-description__content">
+      <div v-html="properties"/>
     </ContainerContent>
   </section>
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   properties: {
     type: String,
     required: true,

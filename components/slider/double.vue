@@ -4,38 +4,40 @@
   <!-- Если сладов больше 1 но меньше 5, то сделать в aside кол-во слайдов равного кол-во слада, навесить класс slider-double-- -->
   <!-- Добавить Fancybox -->
   <div class="slider-double">
-    <div class="slider-double__aside swiper" ref="asideSlider">
+    <div ref="asideSlider" class="slider-double__aside swiper">
       <div class="swiper-wrapper">
         <div
+          v-for="(slide, index) of slides"
+          :key="'slider-double-' + index"
           class="slider-double__aside-slide swiper-slide image-style-cover"
-          v-for="slide of slides"
           v-html="slide.markup"
-        ></div>
+        />
       </div>
     </div>
-    <div class="slider-double__main swiper" ref="mainSlider">
+    <div ref="mainSlider" class="slider-double__main swiper">
       <div class="swiper-wrapper">
         <div
+          v-for="(slide, index) of slides"
+          :key="'slider-double-main-' + index"
           class="slider-double__main-slide swiper-slide image-style-cover"
-          v-for="slide of slides"
         >
           <a
             :href="slide.raw"
             class="slider-double__main-link"
             data-fancybox="main-slider"
             v-html="slide.markup"
-          ></a>
+          />
         </div>
       </div>
       <div class="slider-double__control">
         <button class="slider-double__btn slider-double__btn--prev">
           <svg>
-            <use xlink:href="/icons/sprite.svg#arrow"></use>
+            <use xlink:href="/icons/sprite.svg#arrow"/>
           </svg>
         </button>
         <button class="slider-double__btn slider-double__btn--next">
           <svg>
-            <use xlink:href="/icons/sprite.svg#arrow"></use>
+            <use xlink:href="/icons/sprite.svg#arrow"/>
           </svg>
         </button>
       </div>
@@ -50,12 +52,11 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
 import "swiper/css";
 // Swiper
 import Swiper from "swiper";
-import "swiper/css";
 import "swiper/css/thumbs";
 import { Navigation, Thumbs } from "swiper/modules";
 import { ref, onMounted } from "vue";
 // Props
-const props = defineProps({
+defineProps({
   slides: {
     type: Array,
     required: true,

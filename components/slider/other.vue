@@ -1,17 +1,17 @@
 <template>
-  <div class="other-slider__wrap" ref="wrap">
+  <div ref="wrap" class="other-slider__wrap">
     <SliderTop :title="title" />
-    <div class="other-slider swiper" ref="slider">
+    <div ref="slider" class="other-slider swiper">
       <div class="other-slider__wrapper swiper-wrapper">
         <div
-          class="other-slider__slide swiper-slide"
           v-for="slide of slides"
           :key="slide.title"
+          class="other-slider__slide swiper-slide"
         >
           <div
             class="other-slider__img"
             v-html="slide.field_image[0].markup"
-          ></div>
+          />
           <div class="other-slider__title title-h5">{{ slide.title }}</div>
           <div class="other-slider__wraps">
             <div class="other-slider__wrap">
@@ -40,7 +40,7 @@ import "swiper/css/effect-fade";
 import { Navigation } from "swiper/modules";
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
-const props = defineProps({
+defineProps({
   slides: {
     type: Array,
     required: true,

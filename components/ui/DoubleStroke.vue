@@ -2,7 +2,7 @@
   <div class="double-stroke">
     <span class="double-stroke__left">{{ title }}</span>
     <span class="double-stroke__right">
-      <slot></slot>
+      <slot/>
     </span>
   </div>
 </template>

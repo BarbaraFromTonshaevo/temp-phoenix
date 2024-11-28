@@ -2,7 +2,11 @@
   <section>
     <h3 class="section-title title-h3">Обшивка</h3>
     <ul class="projects-sheathing__list">
-      <li class="projects-sheathing__item" v-for="item of list">
+      <li
+        v-for="(item, index) of list"
+        :key="'projects-sheathing' + index"
+        class="projects-sheathing__item"
+      >
         <CardSheathing
           :title="item.title"
           :icon="item.icon"

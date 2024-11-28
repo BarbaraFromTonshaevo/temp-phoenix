@@ -2,19 +2,22 @@
   <section>
     <h3 class="section-title title-h3">Габариты</h3>
     <div>
-      <UiDoubleStroke v-for="item of properties" :title="item.field_name[0]">{{
-        item.field_value[0]
-      }}</UiDoubleStroke>
+      <UiDoubleStroke
+        v-for="item of properties"
+        :key="item.field_name[0]"
+        :title="item.field_name[0]"
+        >{{ item.field_value[0] }}</UiDoubleStroke
+      >
     </div>
   </section>
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   properties: {
-    type: Object,
+    type: Array,
     required: true,
-    default: [],
+    default: () => [],
   },
 });
 </script>

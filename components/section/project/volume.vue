@@ -2,7 +2,7 @@
   <section>
     <h3 class="section-title title-h3">Объем работ</h3>
     <ul class="projects-volume__list">
-      <li class="projects-volume__item" v-for="item, index of properties">
+      <li v-for="item, index of properties" :key="'projects-volume-' + index" class="projects-volume__item">
         <span class="projects-volume__left">{{ item.field_name[0] }}</span>
         <span class="projects-volume__right">{{ index >8? index+1: '0'+(index + 1) }}</span>
       </li>
@@ -11,11 +11,11 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   properties: {
     type: Object,
     required: true,
-    default: {},
+    default: ()=>{},
   },
 });
 </script>

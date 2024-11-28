@@ -11,7 +11,7 @@
       :slides="data.data.field_gallery"
       :description="data.data.body[0]"
     />
-    <ContainerNavigation :navigationList="nav" class="product__body container">
+    <ContainerNavigation :navigation-list="nav" class="product__body container">
       <SectionProductCharacteristics
         id="characteristics"
         :properties="data.data.field_chars"
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   data: {
     type: Object,
     default: () => {},
