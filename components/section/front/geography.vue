@@ -11,7 +11,7 @@
           </div>
           <ButtonBase class="front-geography__btn" name="secondary" size="large" mode="nuxt-link" link="/projects">Посмотреть проекты</ButtonBase>
           <div class="front-geography__img">
-            <img src="/images/front/geography.png" alt="" />
+            <img src="/images/front/geography.png" alt="" >
           </div>
         </div>
         <div class="front-geography__right">

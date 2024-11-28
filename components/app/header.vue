@@ -9,8 +9,8 @@
     <div class="header__body">
       <div class="header__container container">
         <NuxtLink to="/" class="header__logo">
-          <img src="/icons/logo.svg" class="header__logo-dark" />
-          <img src="/icons/logo-light.svg" class="header__logo-light" />
+          <img src="/icons/logo.svg" class="header__logo-dark" >
+          <img src="/icons/logo-light.svg" class="header__logo-light" >
         </NuxtLink>
         <nav
           v-if="!isMobileOrTablet && mainInfoStore.isReady"

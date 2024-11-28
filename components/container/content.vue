@@ -8,8 +8,7 @@
   import { ref, onMounted } from "vue";
   const contentBody = ref(null);
   onMounted(() => {
-    // добавление внешней обертки
-  
+    // добавление внешней обертки для таблиц
     contentBody.value.querySelectorAll("table").forEach((table) => {
       const wrapper = document.createElement("div");
       wrapper.classList.add("table-wrap");

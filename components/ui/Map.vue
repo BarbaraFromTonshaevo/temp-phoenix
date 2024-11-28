@@ -1,12 +1,12 @@
 <!-- !!! Будьте аккуратно с координатами, они отличаются с версией v3 -->
 <template>
   <div class="map-container">
-    <div :id="mapID" class="map-container__body"></div>
+    <div :id="mapID" class="map-container__body"/>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 
 const props = defineProps({
   mapID: {
@@ -17,7 +17,7 @@ const props = defineProps({
   center: {
     type: Array,
     required: true,
-    default: [43.894568499999956, 56.27075056847694],
+    default: () => [43.894568499999956, 56.27075056847694],
   },
   zoom: {
     type: Number,
@@ -33,13 +33,13 @@ const props = defineProps({
     //     iconImageSize
     //     iconImageOffset
     required: true,
-    default: [],
+    default: () => [],
   },
   // попробовать передавать список Controls
   behavios: {
     typr: Array,
     required: false,
-    default: [],
+    default: () => [],
   },
 });
 
@@ -49,7 +49,7 @@ onMounted(() => {
       `script[src="${useRuntimeConfig().public.yandexApi}"]`
     )
   ) {
-    let script = document.createElement("script");
+    const script = document.createElement("script");
     script.src = useRuntimeConfig().public.yandexApi;
     document.head.appendChild(script);
     script.onload = function () {};
@@ -66,7 +66,7 @@ onMounted(() => {
 async function initMap() {
   const mapDOM = document.getElementById(props.mapID);
   if (mapDOM && mapDOM.innerHTML == "") {
-    var map = new ymaps.Map(
+    const map = new ymaps.Map(
       mapDOM,
       {
         center: props.center.reverse(),
@@ -76,7 +76,9 @@ async function initMap() {
       { suppressMapOpenBlock: true }
     );
     props.points.forEach((point) => {
-      const pointLayout = ymaps.templateLayoutFactory.createClass(point.content);
+      const pointLayout = ymaps.templateLayoutFactory.createClass(
+        point.content
+      );
       const stock = new ymaps.Placemark(
         point.coordinates.reverse(),
         {},
@@ -95,7 +97,7 @@ async function initMap() {
       if (point.balloonContentBody !== "") {
         map.geoObjects.events.add("balloonopen", function (e) {
           // Получаем метку, для которой открывается balloon
-          var mark = e.get("target");
+          const mark = e.get("target");
           // Устанавливаем balloon рядом с меткой
           mark.options.set("balloonOffset", [100, 0]); // Измените на нужные значения
         });

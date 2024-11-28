@@ -15,10 +15,10 @@
         </div>
         <div class="card-project__arrow">
             <svg class="card-project__arrow-svg">
-                <use xlink:href="/icons/sprite.svg#arrow-short"></use>
+                <use xlink:href="/icons/sprite.svg#arrow-short"/>
             </svg>
         </div>
-        <div class="card-project__img image-style-cover" v-html="img.markup"></div>
+        <div class="card-project__img image-style-cover" v-html="img.markup"/>
     </NuxtLink>
 </template> 
 

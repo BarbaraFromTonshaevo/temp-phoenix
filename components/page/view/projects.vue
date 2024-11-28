@@ -17,8 +17,8 @@
           <InputRadio
             name="projects-switch"
             :items="switchList"
-            :initialValue="activeBlock"
-            @update:modelValue="updateSwitch"
+            :initial-value="activeBlock"
+            @update:model-value="updateSwitch"
           />
         </div>
         <!-- <SectionProjectsFilter
@@ -27,7 +27,7 @@
           /> -->
       </div>
 
-      <div class="projects__wrapper" ref="wrapper">
+      <div ref="wrapper" class="projects__wrapper">
         <div class="projects__wrap" data-switch="projects-switch-1">
           <SectionProjectsMap :list="data.data" :points="points" />
         </div>
@@ -50,7 +50,7 @@ const props = defineProps({
 });
 
 const points = computed(()=>{
-    let arr = [];
+    const arr = [];
     props.data.data.forEach(element => {
         arr.push({
             coordinates: element.field_coordinates.split(',').map(coord => +coord),

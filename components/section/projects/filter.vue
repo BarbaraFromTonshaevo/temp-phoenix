@@ -7,8 +7,8 @@
     ]"
   >
     <div
-      class="projects-filter__btn"
       v-if="isMobileOrTablet"
+      class="projects-filter__btn"
       @click="isOpened = true"
     >
       Фильтры
@@ -16,23 +16,23 @@
     <div class="projects-filter__body">
       <div class="projects-filter__close" @click="isOpened = false">
         <svg>
-          <use xlink:href="/icons/sprite.svg#plus"></use>
+          <use xlink:href="/icons/sprite.svg#plus"/>
         </svg>
       </div>
       <div class="projects-filter__selects">
         <InputSelect
           :items="region"
-          :initialItem="region[0]"
-          :isAccordion="false"
-          @update:selectedItem="changeRegion"
+          :initial-item="region[0]"
+          :is-accordion="false"
           class="projects-filter__select"
+          @update:selected-item="changeRegion"
         />
         <InputSelect
           :items="segment"
-          :initialItem="segment[0]"
-          :isAccordion="false"
-          @update:selectedItem="changeSegment"
+          :initial-item="segment[0]"
+          :is-accordion="false"
           class="projects-filter__select"
+          @update:selected-item="changeSegment"
         />
       </div>
       <div class="projects-filter__btns">
@@ -52,24 +52,25 @@
 </template>
 
 <script setup>
-const props = defineProps({
+import { ref } from "vue";
+
+defineProps({
   segment: {
     type: Array,
     required: true,
-    default: [],
+    default: ()=>[],
   },
   region: {
     type: Array,
     required: true,
-    default: [],
+    default: ()=>[],
   },
 });
-import { ref } from "vue";
 const { isMobileOrTablet } = useDevice();
 const isOpened = ref(false);
 
-const activeRegion = ref();
-const activeSegment = ref();
+// const activeRegion = ref();
+// const activeSegment = ref();
 
 function changeRegion() {}
 function changeSegment() {}
