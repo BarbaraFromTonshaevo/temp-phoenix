@@ -55,7 +55,7 @@ defineProps({
         height: 2px;
         width: 2px;
         border-radius: 50%;
-        background-color: var(--breadcrumbs);
+        background-color: var(--text-default);
         margin: auto;
       }
     }
@@ -67,7 +67,7 @@ defineProps({
     }
     &--disabled {
       pointer-events: none;
-      color: var(--breadcrumbs);
+      color: var(--text-default);
     }
   }
 }
