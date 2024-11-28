@@ -1,11 +1,17 @@
 <template>
-    <div>
-        <h1 class="title-h1">About page</h1>
-    </div>
+  <SectionAboutHero :breadcrumbs="data.breadcrumb" :title="data.data.title" />
+  <SectionAboutMain />
+  <SectionAboutProjects :slides="data.data.field_projects" />
+  <SectionAboutDocuments :list="data.data.field_documents" />
+  <SectionAboutPartners :list="data.data.field_partners" />
 </template>
 
 <script setup>
-
+defineProps({
+  data: {
+    type: Object,
+    default: () => {},
+  },
+});
 </script>
 
-<style lang="scss" scoped></style>
