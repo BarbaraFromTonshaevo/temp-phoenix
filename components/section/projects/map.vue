@@ -1,15 +1,10 @@
 <template>
     <div class="projects-map">
-        <div class="projects-map__body">
-            hehe map
-        </div>
-      <!-- <LazyContainerMapV2 class="projects-map__body" :mapID="'map-projects'"  :center="centerProjects" :zoom="zoomProjects" :points="points"/> -->
+      <UiMap class="projects-map__body" :mapID="'map-projects'"  :center="centerProjects" :zoom="zoomProjects" :points="points"/>
     </div>
   </template>
   
   <script setup>
-  import { onMounted } from "vue";
-  
   const props = defineProps({
     list: {
       type: Array,

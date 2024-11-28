@@ -23,7 +23,28 @@
 </template> 
 
 <script setup>
-const props = defineProps(['img','segment', 'region', 'title', 'url'])
+defineProps({
+    img: {
+        type: Object,
+        default: ()=>{}
+    },
+    segment: {
+        type: String,
+        default: ""
+    },
+    region: {
+        type: String,
+        default: ""
+    },
+    title: {
+        type: String,
+        default: ""
+    },
+    url: {
+        type: String,
+        default: ""
+    }
+})
 </script>
 
 <style lang="scss" scoped>

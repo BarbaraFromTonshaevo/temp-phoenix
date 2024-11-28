@@ -12,7 +12,7 @@
             />
           </li>
         </ul>
-        <ButtonSecondary class="projects-list__btn" text="Показать ещё" :isLarge="true" @click="showMore" />
+        <ButtonBase class="projects-list__btn" name="secondary" mode="button" size="large" @click="showMore">Показать ещё</ButtonBase>
       </div>
     </div>
   </template>
