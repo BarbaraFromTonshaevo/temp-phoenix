@@ -1,14 +1,18 @@
 <template>
-  <main class="main" :class="{'main--front': isFront}">
+  <main class="main" :class="{ 'main--front': isFront }">
     <div v-if="status === 'pending' || status === 'fetching'">
-      <UiLoader/>
+      <UiLoader />
     </div>
     <div v-else-if="status === 'success'">
-        <component :is="componentToRender" v-if="componentToRender"  :data="data"/>
+      <component
+        :is="componentToRender"
+        v-if="componentToRender"
+        :data="data"
+      />
     </div>
     <div v-else>
-      <AppError404 v-if="error.statusCode == 404"/>
-      <AppErrorMessage v-else :message="error.cause.message"/>
+      <AppError404 v-if="error.statusCode == 404" />
+      <AppErrorMessage v-else :message="error.cause.message" />
     </div>
   </main>
 </template>
@@ -17,7 +21,7 @@
 // НУЖНО!!! Учесть query параметры
 import { shallowRef, watch, computed, defineAsyncComponent } from "vue";
 const route = useRoute();
-const isFront = ref(route.fullPath === "/"? true: false);
+const isFront = ref(route.fullPath === "/" ? true : false);
 
 // опеределяем по какому апи делать запрос
 const apiUrl =
@@ -72,13 +76,14 @@ const componentsMap = {
   nodeproduct: () => import("../components/page/node/product.vue"),
   nodeproject: () => import("../components/page/node/project.vue"),
   nodequestions: () => import("../components/page/node/questions.vue"),
+  nodepage: () => import("../components/page/node/page.vue"),
   // представления
   viewcatalog: () => import("../components/page/view/catalog.vue"),
   viewprojects: () => import("../components/page/view/projects.vue"),
   viewservices: () => import("../components/page/view/services.vue"),
 };
 
-// наблюдатель за изменением имени компоненты 
+// наблюдатель за изменением имени компоненты
 // меняется имя компоненты - меняется страница
 watch(
   componentName,
@@ -99,7 +104,7 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-.main--front{
+.main--front {
   padding: 0;
 }
 </style>
