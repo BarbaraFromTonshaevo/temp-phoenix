@@ -21,10 +21,10 @@
             @update:model-value="updateSwitch"
           />
         </div>
-        <!-- <SectionProjectsFilter
-            :region="projects.filters.region"
-            :segment="projects.filters.segment"
-          /> -->
+        <SectionProjectsFilter
+          :region="filters.region"
+          :segment="filters.segment"
+        />
       </div>
 
       <div ref="wrapper" class="projects__wrapper">
@@ -49,19 +49,37 @@ const props = defineProps({
   },
 });
 
-const points = computed(()=>{
-    const arr = [];
-    props.data.data.forEach(element => {
-        arr.push({
-            coordinates: element.field_coordinates.split(',').map(coord => +coord),
-            content: `<img src="/icons/point-s.svg" class="projects__map-point">`
-        })
+const filters = computed(() => {
+  return {
+    region: [
+      {
+        value: "all",
+        label: "Регион",
+      },
+      ...props.data.filters.region.options,
+    ],
+    segment: [
+      {
+        value: "all",
+        label: "Сегмент",
+      },
+      ...props.data.filters.segment.options,
+    ],
+  };
+});
+
+const points = computed(() => {
+  const arr = [];
+  props.data.data.forEach((element) => {
+    arr.push({
+      coordinates: element.field_coordinates.split(",").map((coord) => +coord),
+      content: `<img src="/icons/point-s.svg" class="projects__map-point">`,
     });
-    return arr;
-})
+  });
+  return arr;
+});
 
-// Switch of blocks map|list
-
+// Переключение с карты на список
 const switchList = [
   {
     id: "projects-switch-1",
@@ -86,7 +104,9 @@ onMounted(() => {
 // // изменить активный блок
 const updateSwitch = (newValue) => {
   activeBlock.value = newValue;
-  wrapper.value.querySelector(".projects__wrap--active").classList.remove("projects__wrap--active");
+  wrapper.value
+    .querySelector(".projects__wrap--active")
+    .classList.remove("projects__wrap--active");
   const activeElem = wrapper.value.querySelector(
     `[data-switch="${activeBlock.value}"]`
   );

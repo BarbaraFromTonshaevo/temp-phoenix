@@ -22,15 +22,14 @@
 import { shallowRef, watch, computed, defineAsyncComponent } from "vue";
 const route = useRoute();
 const isFront = ref(route.path === "/" ? true : false);
-
+console.log(route.query);
 // опеределяем по какому апи делать запрос
-const apiUrl =
-  route.path === "/"
-    ? `${useRuntimeConfig().public.apiBase}/wsapi/packs/front`
-    : `${useRuntimeConfig().public.apiBase}${route.path}?_format=json`;
+const apiUrl = isFront.value
+  ? `${useRuntimeConfig().public.apiBase}/wsapi/packs/front`
+  : `${useRuntimeConfig().public.apiBase}${route.path}?_format=json`;
 
 // имя кэша
-const cacheName = route.path === "/" ? "front" : route.path;
+const cacheName = isFront.value ? "front" : route.path;
 
 // компонента
 const componentToRender = shallowRef(null);
@@ -38,7 +37,10 @@ const componentToRender = shallowRef(null);
 // запрос
 const { data, status, error } = await useLazyAsyncData(
   cacheName,
-  () => $fetch(apiUrl),
+  () =>
+    $fetch(apiUrl, {
+      query: route.query,
+    }),
   { deep: true }
 );
 
@@ -47,7 +49,7 @@ const componentName = computed(() => {
   // при формировании адреса и имени компоненты учитывать написания snake-case или camel-case
   if (data.value) {
     let nameStr = "";
-    if (route.path === "/") {
+    if (isFront.value) {
       // Главная
       nameStr = "front";
     } else {
