@@ -29,7 +29,9 @@ const { data: mainInfoData } = await useFetch(
 mainInfoStore.setHeaderData(mainInfoData.value);
 
 const device = useDevice();
-const layout = ref(device.isDesktop === true ? "scroller" : "default");
+// const layout = ref(device.isDesktop === true ? "scroller" : "default");
+const layout = ref("default");
+
 
 //аналитика
 // useHead({

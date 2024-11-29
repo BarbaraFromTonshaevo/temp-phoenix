@@ -1,19 +1,27 @@
 <template>
   <div>
-    <AppHeader :is-transparent="isHeaderTransparent"/>
+    <AppHeader />
     <div class="page-content">
       <slot />
     </div>
-    <AppFooter/>
+    <AppFooter />
   </div>
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import { ref } from "vue";
 import { useMainInfoStore } from "~/stores/mainInfo";
 const mainInfoStore = useMainInfoStore();
 const route = useRoute();
-const isHeaderTransparent = ref(route.fullPath == "/"? true: false);
+
+if (route.path === "/") {
+  console.log("transparent");
+  mainInfoStore.makeHeaderTransparent();
+} else {
+  console.log("opaque");
+  mainInfoStore.makeHeaderOpaque();
+}
+
 let lastScrollY = 0; // Для хранения предыдущей позиции прокрутки
 const handleScroll = () => {
   const currentScrollY = window.scrollY; // Текущая позиция прокрутки
@@ -22,6 +30,13 @@ const handleScroll = () => {
     mainInfoStore.makeHeaderHidden(); // Скрыть шапку
   } else {
     mainInfoStore.makeHeaderVisible(); // Показать шапку
+  }
+  if (route.path === "/") {
+    if (window.scrollY > window.innerHeight) {
+      mainInfoStore.makeHeaderOpaque();
+    } else {
+      mainInfoStore.makeHeaderTransparent();
+    }
   }
   lastScrollY = currentScrollY; // Обновляем последнюю позицию прокрутки
 };
@@ -48,7 +63,7 @@ onBeforeUnmount(() => {
 }
 
 // body {
-  // padding-top: calc(var(--header-height) + var(--header-main-gap));
+// padding-top: calc(var(--header-height) + var(--header-main-gap));
 // }
 
 .main {

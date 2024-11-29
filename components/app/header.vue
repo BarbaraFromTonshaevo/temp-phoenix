@@ -3,14 +3,14 @@
     class="header"
     :class="[
       { 'header--hidden': mainInfoStore.headerIsHidden },
-      { 'header--transparent': isTransparent },
+      { 'header--transparent': mainInfoStore.headerIsTransparent },
     ]"
   >
     <div class="header__body">
       <div class="header__container container">
         <NuxtLink to="/" class="header__logo">
-          <img src="/icons/logo.svg" class="header__logo-dark" >
-          <img src="/icons/logo-light.svg" class="header__logo-light" >
+          <img src="/icons/logo.svg" class="header__logo-dark" />
+          <img src="/icons/logo-light.svg" class="header__logo-light" />
         </NuxtLink>
         <nav
           v-if="!isMobileOrTablet && mainInfoStore.isReady"
@@ -40,11 +40,13 @@
               sprite="telegram"
               mode="a"
               :link="mainInfoStore.info.telegram"
+              :name="mainInfoStore.headerIsTransparent ? 'dark' : 'normal'"
             />
             <ButtonIcon
               sprite="wa"
               mode="a"
               :link="mainInfoStore.info.whatsapp"
+              :name="mainInfoStore.headerIsTransparent ? 'dark' : 'normal'"
             />
           </div>
           <ButtonBase v-if="!isMobileOrTablet" mode="button" name="primary"

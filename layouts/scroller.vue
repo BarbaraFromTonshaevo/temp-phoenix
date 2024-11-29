@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppHeader :is-transparent="isHeaderTransparent"/>
+    <AppHeader/>
     <div ref="scroller" class="scroller">
       <div class="page-content">
         <slot />
@@ -18,7 +18,6 @@ import Scrollbar, { ScrollbarPlugin } from "smooth-scrollbar";
 import { useScrollbarStore } from "@/stores/scrollbar";
 
 const route = useRoute();
-const isHeaderTransparent = ref(route.fullPath == "/"? true: false);
 const isHeaderVisible = ref(true);
 
 const scrollbarStore = useScrollbarStore();

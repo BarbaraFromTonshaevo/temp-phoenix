@@ -3,6 +3,11 @@ import { defineNuxtConfig } from "nuxt/config";
 import autoprefixer from "autoprefixer";
 import postCssSortMediaQueries from "postcss-sort-media-queries";
 export default defineNuxtConfig({
+  router: {
+    options: {
+      scrollBehaviorType: 'auto'
+    }
+  },
   app: {
     head: {
       htmlAttrs: {

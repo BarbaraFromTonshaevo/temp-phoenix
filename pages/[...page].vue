@@ -21,16 +21,16 @@
 // НУЖНО!!! Учесть query параметры
 import { shallowRef, watch, computed, defineAsyncComponent } from "vue";
 const route = useRoute();
-const isFront = ref(route.fullPath === "/" ? true : false);
+const isFront = ref(route.path === "/" ? true : false);
 
 // опеределяем по какому апи делать запрос
 const apiUrl =
-  route.fullPath === "/"
+  route.path === "/"
     ? `${useRuntimeConfig().public.apiBase}/wsapi/packs/front`
-    : `${useRuntimeConfig().public.apiBase}${route.fullPath}?_format=json`;
+    : `${useRuntimeConfig().public.apiBase}${route.path}?_format=json`;
 
 // имя кэша
-const cacheName = route.fullPath === "/" ? "front" : route.fullPath;
+const cacheName = route.path === "/" ? "front" : route.path;
 
 // компонента
 const componentToRender = shallowRef(null);
@@ -47,7 +47,7 @@ const componentName = computed(() => {
   // при формировании адреса и имени компоненты учитывать написания snake-case или camel-case
   if (data.value) {
     let nameStr = "";
-    if (route.fullPath === "/") {
+    if (route.path === "/") {
       // Главная
       nameStr = "front";
     } else {

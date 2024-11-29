@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useMainInfoStore = defineStore("mainInfoStore", {
   state: () => ({
     headerIsHidden: false,
-    menuIsActive: false,
+    headerIsTransparent: false,
     main: [
       {
         title: "Главная",
@@ -48,11 +48,11 @@ export const useMainInfoStore = defineStore("mainInfoStore", {
     makeHeaderHidden() {
       this.headerIsHidden = true;
     },
-    makeMenuActive() {
-      this.menuIsActive = true;
+    makeHeaderTransparent() {
+      this.headerIsTransparent = true;
     },
-    makeMenuInactive() {
-      this.menuIsActive = false;
-    },
+    makeHeaderOpaque() {
+      this.headerIsTransparent  = false;
+    }
   },
 });
