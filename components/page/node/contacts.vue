@@ -85,10 +85,15 @@ const mapZoom = 4;
 const mapPoints = [
   {
     coordinates: [43.894568499999956, 56.27075056847694],
-    content: `<img src="/icons/point.svg" class="projects__map-point">`,
+    content: `<img src="/icons/point.svg" class="contacts__map-point">`,
   },
 ];
 </script>
+<style>
+.contacts__map-point {
+  transform: translate(-50%, -100%);
+}
+</style>
 
 <style lang="scss" scoped>
 .contacts {
