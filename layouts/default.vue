@@ -15,10 +15,8 @@ const mainInfoStore = useMainInfoStore();
 const route = useRoute();
 
 if (route.path === "/") {
-  console.log("transparent");
   mainInfoStore.makeHeaderTransparent();
 } else {
-  console.log("opaque");
   mainInfoStore.makeHeaderOpaque();
 }
 
