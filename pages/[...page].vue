@@ -10,7 +10,7 @@
         :data="data"
       />
     </div>
-    <div v-else>
+    <div v-else class="error-page">
       <AppError404 v-if="error.statusCode == 404" />
       <AppErrorMessage v-else :message="error.cause.message" />
     </div>
@@ -22,7 +22,7 @@
 import { shallowRef, watch, computed, defineAsyncComponent } from "vue";
 const route = useRoute();
 const isFront = ref(route.path === "/" ? true : false);
-console.log(route.query);
+// console.log(route.query);
 // опеределяем по какому апи делать запрос
 const apiUrl = isFront.value
   ? `${useRuntimeConfig().public.apiBase}/wsapi/packs/front`
@@ -108,5 +108,10 @@ watch(
 <style lang="scss" scoped>
 .main--front {
   padding: 0;
+}
+.error-page{
+  height: calc(100vh - var(--header-main-gap));
+  margin-top: calc(-1 * var(--header-main-gap));
+  
 }
 </style>
