@@ -24,15 +24,21 @@
         <SectionProjectsFilter
           :region="filters.region"
           :segment="filters.segment"
+          @update:segment="changeSegment"
+          @update:region="changeRegion"
+          @reset="resetFilter"
         />
       </div>
 
       <div ref="wrapper" class="projects__wrapper">
         <div class="projects__wrap" data-switch="projects-switch-1">
-          <SectionProjectsMap :list="data.data" :points="points" />
+          <SectionProjectsMap
+            :list.async="projectsData.data"
+            :points.async="points"
+          />
         </div>
         <div class="projects__wrap" data-switch="projects-switch-2">
-          <SectionProjectsList :list="data.data" />
+          <SectionProjectsList :list.async="projectsData.data" />
         </div>
       </div>
     </div>
@@ -40,7 +46,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { data } from "autoprefixer";
+import { ref, onMounted, computed, watch } from "vue";
+const router = useRouter();
+const route = useRoute();
+
 const { isMobile } = useDevice();
 const props = defineProps({
   data: {
@@ -48,36 +58,49 @@ const props = defineProps({
     default: () => {},
   },
 });
-
-const filters = computed(() => {
-  return {
-    region: [
-      {
-        value: "all",
-        label: "Регион",
-      },
-      ...props.data.filters.region.options,
-    ],
-    segment: [
-      {
-        value: "all",
-        label: "Сегмент",
-      },
-      ...props.data.filters.segment.options,
-    ],
-  };
-});
-
-const points = computed(() => {
-  const arr = [];
-  props.data.data.forEach((element) => {
-    arr.push({
-      coordinates: element.field_coordinates.split(",").map((coord) => +coord),
-      content: `<img src="/icons/point-s.svg" class="projects__map-point">`,
+// данные запроса - начальные данные идет из внешнего запроса, далее меняется внутренним запросом
+const projectsData = ref();
+if (props.data) {
+  projectsData.value = props.data;
+}
+// фильтры
+const filters = computed(
+  () => {
+    return {
+      region: [
+        {
+          value: "all",
+          label: "Регион",
+        },
+        ...projectsData.value.filters.region.options,
+      ],
+      segment: [
+        {
+          value: "all",
+          label: "Сегмент",
+        },
+        ...projectsData.value.filters.segment.options,
+      ],
+    };
+  },
+  { deep: true }
+);
+// точки на карте
+const points = computed(
+  () => {
+    const arr = [];
+    projectsData.value.data.forEach((element) => {
+      arr.push({
+        coordinates: element.field_coordinates
+          .split(",")
+          .map((coord) => +coord),
+        content: `<img src="/icons/point-s.svg" class="projects__map-point">`,
+      });
     });
-  });
-  return arr;
-});
+    return arr;
+  },
+  { deep: true }
+);
 
 // Переключение с карты на список
 const switchList = [
@@ -101,7 +124,8 @@ onMounted(() => {
   activeElem.classList.add("projects__wrap--active");
   wrapper.value.style.height = activeElem.clientHeight + "px";
 });
-// // изменить активный блок
+
+// изменить активный блок
 const updateSwitch = (newValue) => {
   activeBlock.value = newValue;
   wrapper.value
@@ -113,6 +137,84 @@ const updateSwitch = (newValue) => {
   activeElem.classList.add("projects__wrap--active");
   wrapper.value.style.height = activeElem.clientHeight + "px";
 };
+
+// изменить query параметр для региона
+function changeRegion(value) {
+  console.log(value.value);
+  if (value.value == "all") {
+    const query = { ...route.query }; // Создаем копию текущего query
+    delete query.region;
+    router.push({
+      path: route.path,
+      query: {
+        ...query,
+      },
+    });
+  } else {
+    router.push({
+      path: route.path,
+      query: {
+        ...route.query,
+        region: value.value,
+      },
+    });
+  }
+}
+
+// изменить query параметр для сегмента
+function changeSegment(value) {
+  console.log(value.value);
+  if (value.value == "all") {
+    const query = { ...route.query }; // Создаем копию текущего query
+    delete query.segment;
+    router.push({
+      path: route.path,
+      query: {
+        ...query,
+      },
+    });
+  } else {
+    router.push({
+      path: route.path,
+      query: {
+        ...route.query,
+        segment: value.value,
+      },
+    });
+  }
+}
+
+// отчистить фильтр
+function resetFilter() {
+  router.push({
+    path: route.path,
+    query: {},
+  });
+}
+
+// наблюдатель за параметрами url
+watch(
+  () => route.query,
+  (newQuery) => {
+    fetchData(newQuery);
+  },
+  { deep: true }
+);
+
+// запрос к апи (вызывается при изменении параметров)
+async function fetchData(query) {
+  // Используем useFetch для выполнения запроса
+  const res = await $fetch(
+    `${useRuntimeConfig().public.apiBase}${route.path}?_format=json`,
+    {
+      query: query,
+    }
+  );
+  // console.log(res)
+  // Обработка полученных данных
+  projectsData.value = res;
+  //когда поменялся параметры то нужно поменять высоту у wrapper
+}
 </script>
 
 <style lang="scss">

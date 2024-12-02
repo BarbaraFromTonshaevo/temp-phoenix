@@ -16,20 +16,20 @@
     <div class="projects-filter__body">
       <div class="projects-filter__close" @click="isOpened = false">
         <svg>
-          <use xlink:href="/icons/sprite.svg#plus"/>
+          <use xlink:href="/icons/sprite.svg#plus" />
         </svg>
       </div>
       <div class="projects-filter__selects">
         <InputSelect
           :items="region"
-          :initial-item="region[0]"
+          :initial-item.async="initialRegion"
           :is-accordion="false"
           class="projects-filter__select"
           @update:selected-item="changeRegion"
         />
         <InputSelect
           :items="segment"
-          :initial-item="segment[0]"
+          :initial-item.async="initialSegment"
           :is-accordion="false"
           class="projects-filter__select"
           @update:selected-item="changeSegment"
@@ -43,7 +43,7 @@
           mode="button"
           >Применить</ButtonBase
         >
-        <button type="reset" class="projects-filter__reset">
+        <button type="reset" class="projects-filter__reset" @click="resetFilter">
           Сбросить фильтры
         </button>
       </div>
@@ -52,28 +52,44 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-defineProps({
+const props = defineProps({
   segment: {
     type: Array,
     required: true,
-    default: ()=>[],
+    default: () => [],
   },
   region: {
     type: Array,
     required: true,
-    default: ()=>[],
+    default: () => [],
   },
 });
+
+const initialSegment = computed(()=>{
+  let activeOption = props.segment.find(item => item.active == true);
+  return activeOption? activeOption: props.segment[0];
+})
+
+const initialRegion = computed(()=>{
+  let activeOption = props.region.find(item => item.active == true);
+  return activeOption? activeOption: props.region[0];
+})
+
 const { isMobileOrTablet } = useDevice();
 const isOpened = ref(false);
 
-// const activeRegion = ref();
-// const activeSegment = ref();
-
-function changeRegion() {}
-function changeSegment() {}
+const emits = defineEmits("update:segment", "update:region", "reset");
+function changeRegion(value) {
+  emits("update:region", value);
+}
+function changeSegment(value) {
+  emits("update:segment", value);
+}
+function resetFilter(){
+  emits("reset");
+}
 </script>
 
 <style lang="scss" scoped>

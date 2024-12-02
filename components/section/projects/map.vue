@@ -2,10 +2,10 @@
   <div class="projects-map">
     <UiMap
       class="projects-map__body"
-      :map-i-d="'map-projects'"
+      :map-id="'map-projects'"
       :center="centerProjects"
       :zoom="zoomProjects"
-      :points="points"
+      :points.async="points"
     />
   </div>
 </template>

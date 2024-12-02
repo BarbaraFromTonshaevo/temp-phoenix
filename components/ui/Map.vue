@@ -1,15 +1,15 @@
 <!-- !!! Будьте аккуратно с координатами, они отличаются с версией v3 -->
 <template>
   <div class="map-container">
-    <div :id="mapID" class="map-container__body"/>
+    <div :id="mapId" class="map-container__body" />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
-  mapID: {
+  mapId: {
     type: String,
     required: true,
     default: "map",
@@ -42,6 +42,10 @@ const props = defineProps({
     default: () => [],
   },
 });
+// объявление переменной карты и точек
+let map;
+let placemarks = [];
+
 
 onMounted(() => {
   if (
@@ -63,10 +67,11 @@ onMounted(() => {
   }
 });
 
+// инициализация карты
 async function initMap() {
-  const mapDOM = document.getElementById(props.mapID);
+  const mapDOM = document.getElementById(props.mapId);
   if (mapDOM && mapDOM.innerHTML == "") {
-    const map = new ymaps.Map(
+    map = new ymaps.Map(
       mapDOM,
       {
         center: props.center.reverse(),
@@ -75,37 +80,57 @@ async function initMap() {
       },
       { suppressMapOpenBlock: true }
     );
-    props.points.forEach((point) => {
-      const pointLayout = ymaps.templateLayoutFactory.createClass(
-        point.content
-      );
-      const stock = new ymaps.Placemark(
-        point.coordinates.reverse(),
-        {},
-        {
-          iconLayout: pointLayout,
-          // Описываем фигуру активной области "Круг".
-          iconShape: {
-            type: "Circle",
-            // Круг описывается в виде центра и радиуса
-            coordinates: [0, 0],
-            radius: point.radius ? point.radius : 32,
-          },
-        }
-      );
-      map.geoObjects.add(stock);
-      if (point.balloonContentBody !== "") {
-        map.geoObjects.events.add("balloonopen", function (e) {
-          // Получаем метку, для которой открывается balloon
-          const mark = e.get("target");
-          // Устанавливаем balloon рядом с меткой
-          mark.options.set("balloonOffset", [100, 0]); // Измените на нужные значения
-        });
-      }
-    });
+    updateMapPoints(props.points);
     map.behaviors.disable(["scrollZoom"]);
   }
 }
+
+
+// добавление/обновление точек
+const updateMapPoints = (points) => {
+  // Удаляем старые метки
+  placemarks.forEach((placemark) => {
+    map.geoObjects.remove(placemark);
+  });
+  placemarks = [];
+
+  points.forEach((point) => {
+    const pointLayout = ymaps.templateLayoutFactory.createClass(point.content);
+    const placemark = new ymaps.Placemark(
+      point.coordinates.reverse(),
+      {},
+      {
+        iconLayout: pointLayout,
+        // Описываем фигуру активной области "Круг".
+        iconShape: {
+          type: "Circle",
+          // Круг описывается в виде центра и радиуса
+          coordinates: [0, 0],
+          radius: point.radius ? point.radius : 32,
+        },
+      }
+    );
+    placemarks.push(placemark);
+    map.geoObjects.add(placemark);
+    if (point.balloonContentBody !== "") {
+      map.geoObjects.events.add("balloonopen", function (e) {
+        // Получаем метку, для которой открывается balloon
+        const mark = e.get("target");
+        // Устанавливаем balloon рядом с меткой
+        mark.options.set("balloonOffset", [100, 0]); // Измените на нужные значения
+      });
+    }
+  });
+};
+
+// Отслеживаем изменения в пропсах
+watch(
+  () => props.points,
+  (newPoints) => {
+    updateMapPoints(newPoints);
+  },
+  { deep: true } // если массив объектов, используйте deep: true
+);
 </script>
 
 <style lang="scss">

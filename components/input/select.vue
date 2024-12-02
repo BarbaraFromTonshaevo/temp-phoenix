@@ -33,7 +33,7 @@
   </template>
   
   <script setup>
-  import { ref, onMounted } from "vue";
+  import { ref, onMounted, watch } from "vue";
   const isOpened = ref(false);
   const props = defineProps({
     items: {
@@ -107,6 +107,15 @@
       }
     }
   });
+
+  // Наблюдаем за изменением начального значения от родителя
+watch(
+  () => props.initialItem,
+  (newValue) => {
+    selectedItem.value = newValue;
+  }
+);
+
   </script>
   
   <style lang="scss">

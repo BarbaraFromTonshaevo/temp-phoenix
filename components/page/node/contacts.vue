@@ -46,7 +46,7 @@
         </div>
       </div>
       <UiMap
-        :map-i-d="'map-contacts'"
+        :map-id="'map-contacts'"
         class="contacts__map"
         :center="mapCenter"
         :zoom="mapZoom"
