@@ -34,7 +34,6 @@
         <div class="projects__wrap" data-switch="projects-switch-1">
           <SectionProjectsMap
             :list.async="projectsData.data"
-            :points.async="points"
           />
         </div>
         <div class="projects__wrap" data-switch="projects-switch-2">
@@ -46,8 +45,7 @@
 </template>
 
 <script setup>
-import { data } from "autoprefixer";
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, onMounted, computed, watch, onUpdated } from "vue";
 const router = useRouter();
 const route = useRoute();
 
@@ -85,23 +83,6 @@ const filters = computed(
   },
   { deep: true }
 );
-// точки на карте
-const points = computed(
-  () => {
-    const arr = [];
-    projectsData.value.data.forEach((element) => {
-      arr.push({
-        coordinates: element.field_coordinates
-          .split(",")
-          .map((coord) => +coord),
-        content: `<img src="/icons/point-s.svg" class="projects__map-point">`,
-      });
-    });
-    return arr;
-  },
-  { deep: true }
-);
-
 // Переключение с карты на список
 const switchList = [
   {
@@ -140,7 +121,6 @@ const updateSwitch = (newValue) => {
 
 // изменить query параметр для региона
 function changeRegion(value) {
-  console.log(value.value);
   if (value.value == "all") {
     const query = { ...route.query }; // Создаем копию текущего query
     delete query.region;
@@ -163,7 +143,6 @@ function changeRegion(value) {
 
 // изменить query параметр для сегмента
 function changeSegment(value) {
-  console.log(value.value);
   if (value.value == "all") {
     const query = { ...route.query }; // Создаем копию текущего query
     delete query.segment;
@@ -210,11 +189,13 @@ async function fetchData(query) {
       query: query,
     }
   );
-  // console.log(res)
-  // Обработка полученных данных
   projectsData.value = res;
-  //когда поменялся параметры то нужно поменять высоту у wrapper
 }
+// сменить высоту у блока
+onUpdated(() => {
+  wrapper.value.style.height =
+    wrapper.value.querySelector(".projects__wrap--active").clientHeight + "px";
+});
 </script>
 
 <style lang="scss">
@@ -258,22 +239,26 @@ async function fetchData(query) {
     }
   }
 }
+
 @include tablet {
   .projects {
+    &__top {
+      margin-bottom: 50px;
+    }
+    &__title {
+      margin-bottom: 24px;
+    }
     &__descr {
       font-size: 16px;
     }
     &__body-top {
-      gap: 0;
+      // gap: 0;
       margin-bottom: 60px;
     }
   }
 }
 @include mobile {
   .projects {
-    &__title {
-      margin-bottom: 24px;
-    }
     &__descr {
       font-size: 14px;
     }
@@ -299,6 +284,7 @@ async function fetchData(query) {
     }
   }
 }
+
 /* Animations */
 // .fade-enter-active,
 // .fade-leave-active {

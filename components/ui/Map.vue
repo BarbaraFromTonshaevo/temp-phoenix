@@ -1,13 +1,16 @@
 <!-- !!! Будьте аккуратно с координатами, они отличаются с версией v3 -->
 <template>
   <div class="map-container">
-    <div :id="mapId" class="map-container__body" />
+    <div :id="mapId" class="map-container__body" ref="mapDOM" />
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, onUpdated } from "vue";
+import { useMapStore } from "@/stores/map";
+const mapStore = useMapStore();
 
+const mapDOM = ref(null);
 const props = defineProps({
   mapId: {
     type: String,
@@ -27,11 +30,8 @@ const props = defineProps({
   points: {
     type: Array,
     //     coordinates
-    //     balloonContentBody:
-    //     iconLayout
-    //     iconImageHref
-    //     iconImageSize
-    //     iconImageOffset
+    //     properties
+    //     options
     required: true,
     default: () => [],
   },
@@ -46,29 +46,30 @@ const props = defineProps({
 let map;
 let placemarks = [];
 
-
 onMounted(() => {
-  if (
-    !document.querySelector(
-      `script[src="${useRuntimeConfig().public.yandexApi}"]`
-    )
-  ) {
+  console.log(mapDOM.value);
+  if (mapStore.isMapLoaded) {
+    initMap();
+  } else {
     const script = document.createElement("script");
     script.src = useRuntimeConfig().public.yandexApi;
     document.head.appendChild(script);
-    script.onload = function () {};
+    script.onload = function () {
+      mapStore.loadMap();
+    };
     setTimeout(() => {
       initMap();
     }, 1000);
-  } else {
-    //   // Если скрипт уже загружен, просто инициализируем карту
-    //   console.log("else");
-    initMap();
   }
 });
 
+onUpdated(()=>{
+  console.log('hehe');
+})
+
 // инициализация карты
 async function initMap() {
+  console.log(document);
   const mapDOM = document.getElementById(props.mapId);
   if (mapDOM && mapDOM.innerHTML == "") {
     map = new ymaps.Map(
@@ -85,7 +86,6 @@ async function initMap() {
   }
 }
 
-
 // добавление/обновление точек
 const updateMapPoints = (points) => {
   // Удаляем старые метки
@@ -98,26 +98,17 @@ const updateMapPoints = (points) => {
     const pointLayout = ymaps.templateLayoutFactory.createClass(point.content);
     const placemark = new ymaps.Placemark(
       point.coordinates.reverse(),
-      {},
-      {
-        iconLayout: pointLayout,
-        // Описываем фигуру активной области "Круг".
-        iconShape: {
-          type: "Circle",
-          // Круг описывается в виде центра и радиуса
-          coordinates: [0, 0],
-          radius: point.radius ? point.radius : 32,
-        },
-      }
+      point.properties,
+      point.options
     );
     placemarks.push(placemark);
     map.geoObjects.add(placemark);
-    if (point.balloonContentBody !== "") {
+    if (point.balloonContentBody) {
       map.geoObjects.events.add("balloonopen", function (e) {
         // Получаем метку, для которой открывается balloon
         const mark = e.get("target");
         // Устанавливаем balloon рядом с меткой
-        mark.options.set("balloonOffset", [100, 0]); // Измените на нужные значения
+        mark.options.set("balloonOffset", [0, 0]); // Измените на нужные значения
       });
     }
   });

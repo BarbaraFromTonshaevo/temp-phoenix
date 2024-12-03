@@ -140,7 +140,8 @@
 
 @include m.tablet-s {
     :root {
-      --header-height: 92px;
+      --header-height: 80px;
+      --header-main-gap: 40px;
     }
 }
 

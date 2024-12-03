@@ -13,6 +13,7 @@
         </li>
       </ul>
       <ButtonBase
+        v-if="isShowMoreActive"
         class="projects-list__btn"
         name="secondary"
         mode="button"
@@ -29,7 +30,11 @@ defineProps({
   list: {
     type: Array,
     required: true,
-    default: ()=>[],
+    default: () => [],
+  },
+  isShowMoreActive: {
+    type: true,
+    default: false,
   },
 });
 

@@ -81,11 +81,17 @@ defineProps({
   },
 });
 const mapCenter = [43.894568499999956, 56.27075056847694];
-const mapZoom = 4;
+const mapZoom = 5;
 const mapPoints = [
   {
     coordinates: [43.894568499999956, 56.27075056847694],
-    content: `<img src="/icons/point.svg" class="contacts__map-point">`,
+    properties: {},
+    options: {
+      iconLayout: "default#image",
+      iconImageHref: "/icons/point.svg",
+      iconImageSize: [91, 125],
+      iconImageOffset: [-45, -125],
+    }
   },
 ];
 </script>

@@ -82,8 +82,7 @@ const computedClasses = computed(() => {
   border: none;
   border-radius: 60px;
 
-  font-weight: 600;
-  font-size: 16px;
+  font: 600 16px var(--font);
   line-height: normal;
   transition: background-color var(--time), border-color var(--time),
     color var(--time);

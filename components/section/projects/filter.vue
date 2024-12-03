@@ -39,11 +39,17 @@
         <ButtonBase
           v-if="isMobileOrTablet"
           class="projects-filter__submit"
-          size="large"
+          :size="isMobileOrTablet ? 'middle' : 'large'"
           mode="button"
+          name="primary"
           >Применить</ButtonBase
         >
-        <button type="reset" class="projects-filter__reset" @click="resetFilter">
+        <button
+          type="reset"
+          class="projects-filter__reset"
+          :class="{ 'projects-filter__reset--middle': isMobileOrTablet }"
+          @click="resetFilter"
+        >
           Сбросить фильтры
         </button>
       </div>
@@ -67,27 +73,28 @@ const props = defineProps({
   },
 });
 
-const initialSegment = computed(()=>{
-  let activeOption = props.segment.find(item => item.active == true);
-  return activeOption? activeOption: props.segment[0];
-})
+const initialSegment = computed(() => {
+  let activeOption = props.segment.find((item) => item.active == true);
+  return activeOption ? activeOption : props.segment[0];
+});
 
-const initialRegion = computed(()=>{
-  let activeOption = props.region.find(item => item.active == true);
-  return activeOption? activeOption: props.region[0];
-})
+const initialRegion = computed(() => {
+  let activeOption = props.region.find((item) => item.active == true);
+  return activeOption ? activeOption : props.region[0];
+});
 
 const { isMobileOrTablet } = useDevice();
+
 const isOpened = ref(false);
 
-const emits = defineEmits("update:segment", "update:region", "reset");
+const emits = defineEmits(["update:segment", "update:region", "reset"]);
 function changeRegion(value) {
   emits("update:region", value);
 }
 function changeSegment(value) {
   emits("update:segment", value);
 }
-function resetFilter(){
+function resetFilter() {
   emits("reset");
 }
 </script>
@@ -106,8 +113,7 @@ function resetFilter(){
     gap: 10px;
   }
   &__reset {
-    font-weight: 600;
-    font-size: 16px;
+    font: 600 16px var(--font);
     color: var(--text-primary);
     transition: color var(--time);
   }
@@ -181,6 +187,9 @@ function resetFilter(){
       display: flex;
       align-items: center;
       justify-content: center;
+      &--middle {
+        height: 55px;
+      }
     }
     .projects-filter__btns {
       width: 100%;
