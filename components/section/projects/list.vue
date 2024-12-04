@@ -12,15 +12,6 @@
           />
         </li>
       </ul>
-      <ButtonBase
-        v-if="isShowMoreActive"
-        class="projects-list__btn"
-        name="secondary"
-        mode="button"
-        size="large"
-        @click="showMore"
-        >Показать ещё</ButtonBase
-      >
     </div>
   </div>
 </template>
@@ -32,13 +23,7 @@ defineProps({
     required: true,
     default: () => [],
   },
-  isShowMoreActive: {
-    type: true,
-    default: false,
-  },
 });
-
-function showMore() {}
 </script>
 
 <style lang="scss" scoped>

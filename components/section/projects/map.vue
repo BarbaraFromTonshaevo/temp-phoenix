@@ -6,8 +6,9 @@
       :center="centerProjects"
       :zoom="zoomProjects"
       :points.async="points"
+      
     />
-    <
+    
   </div>
 </template>
 
@@ -24,7 +25,7 @@ const props = defineProps({
 const points = computed(
   () => {
     const arr = [];
-    props.list.forEach((element) => {
+    props.list.forEach((element, index) => {
       arr.push({
         coordinates: element.field_coordinates
           .split(",")
@@ -44,6 +45,7 @@ const points = computed(
                     <a href="${element.url}" class="projects-map-point__btn">Подробнее</a>
                 </div>
                 `,
+          clusterCaption: "метка <strong>" + index + "</strong>",
         },
         options: {
           hideIconOnBalloonOpen: false,
@@ -66,6 +68,17 @@ const zoomProjects = 4;
 [class*="-balloon__content"] {
   padding: 40px 10px 40px 40px !important;
   border: none;
+}
+[class*="-cluster-tabs"] {
+  font-family: var(--font);
+  font-weight: 400 !important;
+  strong{
+    font-weight: 400;
+  }
+}
+[class*="-cluster-tabs__menu-item-text"]{
+  color: var(--text-primary) !important;
+  transition: background-color var(--time);
 }
 .projects-map-point {
   font-family: var(--font);

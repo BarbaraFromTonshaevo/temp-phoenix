@@ -18,7 +18,7 @@
                 <use xlink:href="/icons/sprite.svg#arrow-short"/>
             </svg>
         </div>
-        <div class="card-project__img image-style-cover" v-html="img.markup"/>
+        <div class="card-project__img image-style-cover" v-if="img && img.markup" v-html="img.markup"/>
     </NuxtLink>
 </template> 
 

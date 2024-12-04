@@ -41,13 +41,17 @@ const props = defineProps({
     required: false,
     default: () => [],
   },
+  isClusterer: {
+    type: Boolean,
+    default: false,
+  },
 });
 // объявление переменной карты и точек
 let map;
+let clusterer;
 let placemarks = [];
 
 onMounted(() => {
-  console.log(mapDOM.value);
   if (mapStore.isMapLoaded) {
     initMap();
   } else {
@@ -63,13 +67,12 @@ onMounted(() => {
   }
 });
 
-onUpdated(()=>{
-  console.log('hehe');
-})
+onUpdated(() => {
+  console.log("hehe");
+});
 
 // инициализация карты
 async function initMap() {
-  console.log(document);
   const mapDOM = document.getElementById(props.mapId);
   if (mapDOM && mapDOM.innerHTML == "") {
     map = new ymaps.Map(
@@ -77,11 +80,25 @@ async function initMap() {
       {
         center: props.center.reverse(),
         zoom: props.zoom,
-        controls: [],
+        controls: ["zoomControl"],
       },
       { suppressMapOpenBlock: true }
     );
+
+    if (props.isClusterer) {
+      clusterer = new ymaps.Clusterer({
+        preset: "islands#invertedRedClusterIcons",
+        groupByCoordinates: false,
+        clusterDisableClickZoom: true,
+        clusterHideIconOnBalloonOpen: false,
+        geoObjectHideIconOnBalloonOpen: false,
+      });
+      console.log(clusterer);
+      map.geoObjects.add(clusterer);
+    }
+
     updateMapPoints(props.points);
+    // map.controls.add()
     map.behaviors.disable(["scrollZoom"]);
   }
 }
@@ -91,17 +108,23 @@ const updateMapPoints = (points) => {
   // Удаляем старые метки
   placemarks.forEach((placemark) => {
     map.geoObjects.remove(placemark);
+    if (props.isClusterer) {
+      clusterer.remove(placemark);
+    }
   });
   placemarks = [];
 
   points.forEach((point) => {
-    const pointLayout = ymaps.templateLayoutFactory.createClass(point.content);
     const placemark = new ymaps.Placemark(
       point.coordinates.reverse(),
       point.properties,
       point.options
     );
     placemarks.push(placemark);
+
+    if (props.isClusterer) {
+      clusterer.add(placemark);
+    }
     map.geoObjects.add(placemark);
     if (point.balloonContentBody) {
       map.geoObjects.events.add("balloonopen", function (e) {

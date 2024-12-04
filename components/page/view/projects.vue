@@ -32,12 +32,12 @@
 
       <div ref="wrapper" class="projects__wrapper">
         <div class="projects__wrap" data-switch="projects-switch-1">
-          <SectionProjectsMap
-            :list.async="projectsData.data"
-          />
+          <SectionProjectsMap :list.async="projectsData.data" />
         </div>
         <div class="projects__wrap" data-switch="projects-switch-2">
-          <SectionProjectsList :list.async="projectsData.data" />
+          <SectionProjectsList
+            :list.async="projectsData.data"
+          />
         </div>
       </div>
     </div>
@@ -48,7 +48,6 @@
 import { ref, onMounted, computed, watch, onUpdated } from "vue";
 const router = useRouter();
 const route = useRoute();
-
 const { isMobile } = useDevice();
 const props = defineProps({
   data: {
@@ -56,12 +55,14 @@ const props = defineProps({
     default: () => {},
   },
 });
-// данные запроса - начальные данные идет из внешнего запроса, далее меняется внутренним запросом
+
+// Данные запроса - начальные данные идет из внешнего запроса, далее меняется внутренним запросом
 const projectsData = ref();
 if (props.data) {
   projectsData.value = props.data;
 }
-// фильтры
+
+// Фильтры
 const filters = computed(
   () => {
     return {
@@ -83,6 +84,7 @@ const filters = computed(
   },
   { deep: true }
 );
+
 // Переключение с карты на список
 const switchList = [
   {
@@ -106,7 +108,7 @@ onMounted(() => {
   wrapper.value.style.height = activeElem.clientHeight + "px";
 });
 
-// изменить активный блок
+// Изменить активный блок
 const updateSwitch = (newValue) => {
   activeBlock.value = newValue;
   wrapper.value
@@ -119,7 +121,7 @@ const updateSwitch = (newValue) => {
   wrapper.value.style.height = activeElem.clientHeight + "px";
 };
 
-// изменить query параметр для региона
+// Изменить query параметр для региона
 function changeRegion(value) {
   if (value.value == "all") {
     const query = { ...route.query }; // Создаем копию текущего query
@@ -141,10 +143,9 @@ function changeRegion(value) {
   }
 }
 
-// изменить query параметр для сегмента
+// Изменить query параметр для сегмента
 function changeSegment(value) {
   if (value.value == "all") {
-    const query = { ...route.query }; // Создаем копию текущего query
     delete query.segment;
     router.push({
       path: route.path,
@@ -163,7 +164,7 @@ function changeSegment(value) {
   }
 }
 
-// отчистить фильтр
+// Отчистить фильтр
 function resetFilter() {
   router.push({
     path: route.path,
@@ -171,7 +172,7 @@ function resetFilter() {
   });
 }
 
-// наблюдатель за параметрами url
+// Наблюдатель за параметрами url
 watch(
   () => route.query,
   (newQuery) => {
@@ -180,7 +181,7 @@ watch(
   { deep: true }
 );
 
-// запрос к апи (вызывается при изменении параметров)
+// Запрос к апи (вызывается при изменении параметров)
 async function fetchData(query) {
   // Используем useFetch для выполнения запроса
   const res = await $fetch(
@@ -190,8 +191,10 @@ async function fetchData(query) {
     }
   );
   projectsData.value = res;
+
 }
-// сменить высоту у блока
+
+// Сменить высоту у блока
 onUpdated(() => {
   wrapper.value.style.height =
     wrapper.value.querySelector(".projects__wrap--active").clientHeight + "px";
