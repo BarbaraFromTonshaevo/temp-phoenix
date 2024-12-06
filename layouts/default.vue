@@ -5,6 +5,9 @@
       <slot />
     </div>
     <AppFooter />
+    <PopupFeedback/>
+    <PopupSuccess/>
+    <PopupError/>
   </div>
 </template>
 
@@ -53,10 +56,10 @@ onBeforeUnmount(() => {
 }
 *::-webkit-scrollbar-thumb {
   cursor: pointer;
-  background-color: var(--separator-dark);
+  background-color: var(--stroke-primary);
   border-radius: 3px;
   &:hover {
-    background-color: var(--separator-cntrst-sec);
+    background-color: var(--stroke-secondary);
   }
 }
 

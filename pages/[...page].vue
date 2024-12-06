@@ -12,7 +12,7 @@
     </div>
     <div v-else class="error-page">
       <AppError404 v-if="error.statusCode == 404" />
-      <AppErrorMessage v-else :message="error.cause.message" />
+      <AppErrorMessage v-else :message="''" />
     </div>
   </main>
 </template>

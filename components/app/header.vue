@@ -49,7 +49,7 @@
               :name="mainInfoStore.headerIsTransparent ? 'dark' : 'normal'"
             />
           </div>
-          <ButtonBase v-if="!isMobileOrTablet" mode="button" name="primary"
+          <ButtonBase v-if="!isMobileOrTablet" mode="button" name="primary" @click="popupStore.makeFeedbackActive()"
             >Оставить заявку</ButtonBase
           >
           <ButtonBurger
@@ -99,6 +99,7 @@
           mode="button"
           name="primary"
           size="large"
+          @click="popupStore.makeFeedbackActive()"
           >Оставить заявку</ButtonBase
         >
       </div>
@@ -109,12 +110,14 @@
 <script setup>
 import { ref } from "vue";
 import { useMainInfoStore } from "@/stores/mainInfo";
+import { usePopupStore } from "@/stores/popup";
 defineProps({
   isTransparent: {
     type: Boolean,
   },
 });
 const mainInfoStore = useMainInfoStore();
+const popupStore = usePopupStore();
 const { isMobileOrTablet } = useDevice();
 const isMenuActive = ref(false);
 </script>

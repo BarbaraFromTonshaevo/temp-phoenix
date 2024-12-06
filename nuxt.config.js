@@ -74,20 +74,10 @@ export default defineNuxtConfig({
       yandexApi: process.env.NUXT_YANDEX_API,
     },
   },
-  build: {
-    transpile: ['@rollup/plugin-dynamic-import-vars'], // Убедитесь, что вы добавили это, если используете Rollup
-  },
+  // build: {
+  //   transpile: ['@rollup/plugin-dynamic-import-vars'], // Убедитесь, что вы добавили это, если используете Rollup
+  // },
   vite: {
-    // plugins: [
-    //   dynamicImportVars({
-    //     // Вместо опций используйте на свой выбор
-    //     include: 
-    //     ['./components/page/node/contacts.vue', 
-    //     './components/page/view/*.vue', 
-    //     './components/page/*.vue'
-    //   ]
-    //   }),
-    // ],
     server: {
       port: 3000,
     },
@@ -113,8 +103,8 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/eslint",
     "@nuxtjs/device",
-    // '@pinia/nuxt',
     "@nuxt/image",
+    '@vueform/nuxt',    
   ],
   compatibilityDate: "2024-08-06",
 });

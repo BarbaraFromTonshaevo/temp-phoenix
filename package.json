@@ -15,15 +15,17 @@
     "@fancyapps/ui": "^5.0.36",
     "@nuxt/eslint": "^0.5.3",
     "@nuxt/image": "^1.8.1",
+    "@vueform/nuxt": "^1.8.0",
+    "@vueform/plugin-mask": "^1.0.7",
     "axios": "^1.6.8",
     "date-fns": "^3.6.0",
     "gsap": "^3.12.5",
     "nuxt": "^3.12.4",
     "pinia": "^2.2.1",
+    "smooth-scrollbar": "^8.8.4",
     "swiper": "^11.1.0",
     "vue": "^3.5.13",
-    "vue-router": "^4.3.0",
-    "smooth-scrollbar": "^8.8.4"
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@nuxtjs/device": "^3.1.1",
