@@ -115,14 +115,13 @@ onMounted(() => {
       }
 
       if (route.path === "/") {
-        console.log(currentPosition);
         if (currentPosition > window.innerHeight) {
           appStateStore.makeHeaderOpaque();
         } else {
           appStateStore.makeHeaderTransparent();
         }
       }
-      
+
       initialPosition = currentPosition;
     });
 
