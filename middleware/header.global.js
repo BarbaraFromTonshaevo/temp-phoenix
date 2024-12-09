@@ -1,9 +1,9 @@
-import { useMainInfoStore } from "~/stores/mainInfo";
+import { useAppStateStore } from "~/stores/appState";
 
 export default defineNuxtRouteMiddleware((to, from) => {
   if (to.path !== "/") {
-    useMainInfoStore().makeHeaderOpaque();
+    useAppStateStore().makeHeaderOpaque();
   } else {
-    useMainInfoStore().makeHeaderTransparent();
+    useAppStateStore().makeHeaderTransparent();
   }
 });

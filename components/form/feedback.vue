@@ -65,7 +65,6 @@ function sendForm(form) {
   const formJSON = form.data;
   formJSON["webform_id"] = "order";
   formJSON["send_target"] = document.title;
-  console.log(formJSON);
   emits("sendForm", formJSON);
 }
 </script>

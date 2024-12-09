@@ -2,8 +2,8 @@
   <header
     class="header"
     :class="[
-      { 'header--hidden': mainInfoStore.headerIsHidden },
-      { 'header--transparent': mainInfoStore.headerIsTransparent },
+      { 'header--hidden': appStateStore.headerIsHidden },
+      { 'header--transparent': appStateStore.headerIsTransparent },
     ]"
   >
     <div class="header__body">
@@ -40,16 +40,20 @@
               sprite="telegram"
               mode="a"
               :link="mainInfoStore.info.telegram"
-              :name="mainInfoStore.headerIsTransparent ? 'dark' : 'normal'"
+              :name="appStateStore.headerIsTransparent ? 'dark' : 'normal'"
             />
             <ButtonIcon
               sprite="wa"
               mode="a"
               :link="mainInfoStore.info.whatsapp"
-              :name="mainInfoStore.headerIsTransparent ? 'dark' : 'normal'"
+              :name="appStateStore.headerIsTransparent ? 'dark' : 'normal'"
             />
           </div>
-          <ButtonBase v-if="!isMobileOrTablet" mode="button" name="primary" @click="popupStore.makeFeedbackActive()"
+          <ButtonBase
+            v-if="!isMobileOrTablet"
+            mode="button"
+            name="primary"
+            @click="appStateStore.makeFeedbackActive()"
             >Оставить заявку</ButtonBase
           >
           <ButtonBurger
@@ -99,7 +103,7 @@
           mode="button"
           name="primary"
           size="large"
-          @click="popupStore.makeFeedbackActive()"
+          @click="appStateStore.makeFeedbackActive()"
           >Оставить заявку</ButtonBase
         >
       </div>
@@ -110,16 +114,12 @@
 <script setup>
 import { ref } from "vue";
 import { useMainInfoStore } from "@/stores/mainInfo";
-import { usePopupStore } from "@/stores/popup";
-defineProps({
-  isTransparent: {
-    type: Boolean,
-  },
-});
+import { useAppStateStore } from "@/stores/appState";
 const mainInfoStore = useMainInfoStore();
-const popupStore = usePopupStore();
+const appStateStore = useAppStateStore();
 const { isMobileOrTablet } = useDevice();
 const isMenuActive = ref(false);
+
 </script>
 
 <style lang="scss">

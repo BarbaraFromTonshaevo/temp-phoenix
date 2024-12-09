@@ -16,21 +16,43 @@
       </template>
     </NuxtErrorBoundary>
   </NuxtLayout>
+  <PopupFeedback />
+  <PopupSuccess />
+  <PopupError />
 </template>
 
 <script setup>
+import { onMounted, onBeforeUnmount } from 'vue';
+import { useAppStateStore } from '@/stores/appState';
 import { useMainInfoStore } from "@/stores/mainInfo";
 
+const device = useDevice();
+const layout = ref(device.isDesktop === true ? "scroller" : "default");
+// const layout = ref("default");
+
+const appStateStore = useAppStateStore();
 const mainInfoStore = useMainInfoStore();
+
 const { data: mainInfoData } = await useFetch(
   `${useRuntimeConfig().public.apiBase}/wsapi/packs/main_info`,
   {}
 );
 mainInfoStore.setHeaderData(mainInfoData.value);
 
-const device = useDevice();
-// const layout = ref(device.isDesktop === true ? "scroller" : "default");
-const layout = ref("default");
+
+onMounted(() => {
+  if (appStateStore.bodyNoScroll) {
+    document.body.classList.add('no-scroll');
+  }
+  // Добавляем наблюдатель на изменение состояния
+  watch(() => appStateStore.bodyNoScroll, (newVal) => {
+    if (newVal) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  });
+});
 
 
 //аналитика
@@ -61,4 +83,18 @@ const layout = ref("default");
 .page-leave-to {
   opacity: 0;
 }
+
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+*::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: var(--stroke-primary);
+  border-radius: 3px;
+  &:hover {
+    background-color: var(--stroke-secondary);
+  }
+}
+
 </style>

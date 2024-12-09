@@ -1,8 +1,8 @@
 <template>
   <Teleport to="body">
     <PopupBase
-      :state="popupStore.isFeedbackActive"
-      @closePopup="popupStore.makeFeedbackInactive()"
+      :state="appStateStore.popupFeedbackActive"
+      @closePopup="appStateStore.makeFeedbackInactive()"
     >
       <div class="popup__content">
         <h2 class="popup__title">Оставить заявку</h2>
@@ -13,8 +13,8 @@
 </template>
 
 <script setup>
-import { usePopupStore } from "@/stores/popup";
-const popupStore = usePopupStore();
+import { useAppStateStore } from "@/stores/appState";
+const appStateStore = useAppStateStore();
 
 // здесь выполнить обращение к апи
 // в случае успеха popupStore.makeThanksActive
@@ -27,12 +27,12 @@ async function postForm(formJSON) {
   usePostForm(
     formJSON,
     () => {
-      popupStore.makeFeedbackInactive();
-      popupStore.makeSuccessActive();
+      appStateStore.makeFeedbackInactive();
+      appStateStore.makeSuccessActive();
     },
     (e) => {
-      popupStore.makeFeedbackInactive();
-      popupStore.makeErrorActive(e);
+      appStateStore.makeFeedbackInactive();
+      appStateStore.makeErrorActive(e);
     }
   );
 }

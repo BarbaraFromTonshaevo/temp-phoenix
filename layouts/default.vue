@@ -5,22 +5,19 @@
       <slot />
     </div>
     <AppFooter />
-    <PopupFeedback/>
-    <PopupSuccess/>
-    <PopupError/>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import { useMainInfoStore } from "~/stores/mainInfo";
-const mainInfoStore = useMainInfoStore();
+import { useAppStateStore } from "~/stores/appState";
+const appStateStore = useAppStateStore();
 const route = useRoute();
 
 if (route.path === "/") {
-  mainInfoStore.makeHeaderTransparent();
+  appStateStore.makeHeaderTransparent();
 } else {
-  mainInfoStore.makeHeaderOpaque();
+  appStateStore.makeHeaderOpaque();
 }
 
 let lastScrollY = 0; // Для хранения предыдущей позиции прокрутки
@@ -28,15 +25,15 @@ const handleScroll = () => {
   const currentScrollY = window.scrollY; // Текущая позиция прокрутки
   // Если мы прокручиваем вниз
   if (currentScrollY > lastScrollY) {
-    mainInfoStore.makeHeaderHidden(); // Скрыть шапку
+    appStateStore.makeHeaderHidden(); // Скрыть шапку
   } else {
-    mainInfoStore.makeHeaderVisible(); // Показать шапку
+    appStateStore.makeHeaderVisible(); // Показать шапку
   }
   if (route.path === "/") {
     if (window.scrollY > window.innerHeight) {
-      mainInfoStore.makeHeaderOpaque();
+      appStateStore.makeHeaderOpaque();
     } else {
-      mainInfoStore.makeHeaderTransparent();
+      appStateStore.makeHeaderTransparent();
     }
   }
   lastScrollY = currentScrollY; // Обновляем последнюю позицию прокрутки
@@ -50,19 +47,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
-*::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-*::-webkit-scrollbar-thumb {
-  cursor: pointer;
-  background-color: var(--stroke-primary);
-  border-radius: 3px;
-  &:hover {
-    background-color: var(--stroke-secondary);
-  }
-}
-
 // body {
 // padding-top: calc(var(--header-height) + var(--header-main-gap));
 // }

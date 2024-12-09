@@ -1,8 +1,8 @@
 <template>
     <Teleport to="body">
       <PopupBase
-        :state="popupStore.isSuccessActive"
-        @closePopup="popupStore.makeSuccessInactive()"
+        :state="appStateStore.popupSuccessActive"
+        @closePopup="appStateStore.makeSuccessInactive()"
       >
         <div class="popup__content">
           <h2 class="popup__title">Заявка оправлена</h2>
@@ -15,7 +15,7 @@
   </template>
   
   <script setup>
-  import { usePopupStore } from "@/stores/popup";
-  const popupStore = usePopupStore();
+import { useAppStateStore } from "@/stores/appState";
+const appStateStore = useAppStateStore();
   </script>
   

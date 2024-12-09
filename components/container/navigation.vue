@@ -33,8 +33,8 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useScrollbarStore } from "@/stores/scrollbar";
-const scrollbarStore = useScrollbarStore();
+import { useAppStateStore } from "@/stores/appState";
+const appStateStore = useAppStateStore();
 
 // keys of Object: id, title, component, properties
 defineProps({
@@ -61,7 +61,7 @@ function navigateSection(id) {
   console.log(scrollbarStore.body);
   activeSection.value = id;
   const target = mainNav.value.querySelector(`#${id}`);
-  if (scrollbarStore.isActive) {
+  if (appStateStore.scrollbarIsActive) {
     const y =
       scrollbarStore.body.scrollTop + target.getBoundingClientRect().top - 120;
     scrollbarStore.body.scrollTo(0, y, 500);

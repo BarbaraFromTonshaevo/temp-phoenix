@@ -1,29 +1,9 @@
+// хранилище для информации сайта, которая приходит из api
 import { defineStore } from "pinia";
 
 export const useMainInfoStore = defineStore("mainInfoStore", {
   state: () => ({
-    headerIsHidden: false,
-    headerIsTransparent: false,
-    main: [
-      {
-        title: "Главная",
-        url: {
-          href: "/",
-        },
-      },
-      {
-        title: "Текстовая",
-        url: {
-          href: "/text",
-        },
-      },
-      {
-        title: "Контакты",
-        url: {
-          href: "/contacts",
-        },
-      },
-    ],
+    main: [],
     info: {},
     isReady: true,
   }),
@@ -42,17 +22,5 @@ export const useMainInfoStore = defineStore("mainInfoStore", {
       };
       this.isReady = true;
     },
-    makeHeaderVisible() {
-      this.headerIsHidden = false;
-    },
-    makeHeaderHidden() {
-      this.headerIsHidden = true;
-    },
-    makeHeaderTransparent() {
-      this.headerIsTransparent = true;
-    },
-    makeHeaderOpaque() {
-      this.headerIsTransparent  = false;
-    }
   },
 });

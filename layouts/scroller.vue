@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppHeader/>
+    <AppHeader />
     <div ref="scroller" class="scroller">
       <div class="page-content">
         <slot />
@@ -11,18 +11,34 @@
 </template>
 
 <script setup>
-import { ref, provide } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Scrollbar, { ScrollbarPlugin } from "smooth-scrollbar";
-import { useScrollbarStore } from "@/stores/scrollbar";
-
+import { useAppStateStore } from "~/stores/appState";
+const appStateStore = useAppStateStore();
 const route = useRoute();
-const isHeaderVisible = ref(true);
 
-const scrollbarStore = useScrollbarStore();
+if (route.path === "/") {
+  appStateStore.makeHeaderTransparent();
+} else {
+  appStateStore.makeHeaderOpaque();
+}
+
+//сетап скроллера
 const scroller = ref(null);
 let bodyScrollBar;
+
+const { setScrollbar, scrollbar } = provideScrollbar();
+
+//функции для блокирования/разблокирования скролла
+function lockScroll() {
+  bodyScrollBar.updatePluginOptions("modal", { open: true });
+  bodyScrollBar.track.yAxis.hide();
+}
+
+function unlockScroll() {
+  bodyScrollBar.updatePluginOptions("modal", { open: false });
+}
 
 onMounted(() => {
   class ModalPlugin extends ScrollbarPlugin {
@@ -41,17 +57,15 @@ onMounted(() => {
 
   bodyScrollBar = Scrollbar.init(scroller.value, {
     damping: 0.1,
-    thumbMinSize: 20,
-    renderByPixels: true,
-    alwaysShowTracks: true,
-    continuousScrolling: true,
     delegateTo: scroller.value,
+    alwaysShowTracks: true,
+    renderByPixels: true,
+    continuousScrolling: true,
+    thumbMinSize: 20,
     syncCallbacks: true,
   });
 
-  scrollbarStore.setScrollbarBody(bodyScrollBar);
-  scrollbarStore.changeActive(true);
-  provide("smoothScroll", scrollbarStore);
+  setScrollbar(bodyScrollBar);
 
   gsap.registerPlugin(ScrollTrigger);
   setTimeout(() => {
@@ -95,23 +109,41 @@ onMounted(() => {
       currentPosition = offset.y;
 
       if (initialPosition <= currentPosition) {
-        isHeaderVisible.value = false;
+        appStateStore.makeHeaderHidden();
       } else {
-        isHeaderVisible.value = true;
+        appStateStore.makeHeaderVisible();
       }
 
+      if (route.path === "/") {
+        console.log(currentPosition);
+        if (currentPosition > window.innerHeight) {
+          appStateStore.makeHeaderOpaque();
+        } else {
+          appStateStore.makeHeaderTransparent();
+        }
+      }
+      
       initialPosition = currentPosition;
     });
+
+    //скроллить страницу наверх при смене роута
+    watch(
+      () => route.path,
+      () => {
+        setTimeout(() => {
+          bodyScrollBar.scrollTop = 0;
+        }, 200);
+      }
+    );
   }
 
   setupScroller();
 });
-
 onUnmounted(() => {
-    if (scrollbar.value) {
-        scrollbar.value.destroy();
-    }
-})
+  if (scrollbar.value) {
+    scrollbar.value.destroy();
+  }
+});
 </script>
 
 <style lang="scss" scoped>
