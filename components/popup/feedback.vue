@@ -45,13 +45,8 @@ async function postForm(formJSON) {
   gap: 38px;
 }
 .form-feedback {
-  width: 688px;
+  width: calc(100vw - var(--margin-x) * 2 - var(--padding-x) * 2);
+  max-width: 688px;
   display: flex;
-}
-
-@include laptop {
-  .form-feedback {
-    width: calc(100vw - var(--margin-x) * 2 - var(--padding-x) * 2);
-  }
 }
 </style>

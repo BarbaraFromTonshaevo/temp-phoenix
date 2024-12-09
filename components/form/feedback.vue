@@ -1,12 +1,6 @@
 <template>
   <div>
     <ClientOnly>
-      <!-- <Vueform
-        v-bind="vueform"
-        class="test-form"
-        endpoint="false"
-        @submit="sendForm"
-      /> -->
       <Vueform
         class="feedback-form"
         :display-errors="false"
@@ -50,13 +44,14 @@
           :rows="1"
         />
         <ButtonElement
-        name="register"
+          name="register"
           type="button"
           :submits="true"
           buttonLabel="Отправить"
           :full="true"
           size="lg"
           class="feedback-form__submit"
+          :hoverDisabled="false"
         />
       </Vueform>
     </ClientOnly>
@@ -64,49 +59,6 @@
 </template>
 
 <script setup>
-// import { ref } from "vue";
-// const vueform = ref({
-//   displayErrors: false,
-//   schema: {
-//     name: {
-//       type: "text",
-//       placeholder: "Имя*",
-//       fieldName: "Имя",
-//       rules: ["required", "max:255"],
-//       autocomplete: "off",
-//     },
-//     phone: {
-//       type: "text",
-//       placeholder: "Телефон*",
-//       rules: ["required"],
-//       fieldName: "Телефон",
-//       mask: "+7 (000)-000-0000",
-//       autocomplete: "off",
-//     },
-//     email: {
-//       type: "text",
-//       inputType: "email",
-//       rules: ["required", "max:255", "email"],
-//       placeholder: "Электронная почта*",
-//       fieldName: "Электронная почта",
-//       autocomplete: "off",
-//     },
-//     comment: {
-//       type: "textarea",
-//       placeholder: "Комментарий",
-//       fieldName: "Комментарий",
-//       rows: 1,
-//     },
-//     register: {
-//       type: "button",
-//       submits: true,
-//       buttonLabel: "Отправить",
-//       full: true,
-//       size: "lg",
-//     },
-//   },
-// });
-
 const emits = defineEmits(["sendForm"]);
 
 function sendForm(form) {
@@ -138,7 +90,7 @@ function sendForm(form) {
     --vf-py-input: 1.25rem;
     --vf-px-input: 0.5rem;
     --vf-color-input-success: var(--text-primary);
-
+    --vf-color-placeholder: var(--text-default-additional);
     --vf-primary: var(--btn-primary);
     --vf-border-color-btn: var(--btn-primary);
     --vf-radius-btn-lg: 3.75rem;
@@ -146,15 +98,32 @@ function sendForm(form) {
     --vf-py-btn-lg: 1.25rem;
     --vf-px-btn-lg: 1.25rem;
   }
-  &{
+  & {
     width: 100%;
   }
-  &__filed{
+  &__filed {
     display: flex;
     width: 100%;
   }
-  &__submit{
+  &__submit {
     margin-top: 38px;
+    #register:hover {
+      transform: none !important;
+      background-color: var(--btn-primary-hover);
+    }
+  }
+}
+</style>
+<style lang="scss">
+.feedback-form {
+  &__submit {
+    #register {
+      transform: background-color 0.8s;
+      &:hover {
+        transform: none !important;
+        background-color: var(--btn-primary-hover);
+      }
+    }
   }
 }
 </style>

@@ -107,26 +107,11 @@ onMounted(() => {
   setupScroller();
 });
 
-// import { useMainInfoStore } from "~/stores/mainInfo";
-// const mainInfoStore = useMainInfoStore();
-
-// let lastScrollY = 0; // Для хранения предыдущей позиции прокрутки
-// const handleScroll = () => {
-//   const currentScrollY = window.scrollY; // Текущая позиция прокрутки
-//   // Если мы прокручиваем вниз
-//   if (currentScrollY > lastScrollY) {
-//     mainInfoStore.makeHeaderHidden(); // Скрыть шапку
-//   } else {
-//     mainInfoStore.makeHeaderVisible(); // Показать шапку
-//   }
-//   lastScrollY = currentScrollY; // Обновляем последнюю позицию прокрутки
-// };
-// onMounted(() => {
-//   window.addEventListener("scroll", handleScroll); // Добавляем слушатель события
-// });
-// onBeforeUnmount(() => {
-//   window.removeEventListener("scroll", handleScroll); // Удаляем слушатель события
-// });
+onUnmounted(() => {
+    if (scrollbar.value) {
+        scrollbar.value.destroy();
+    }
+})
 </script>
 
 <style lang="scss" scoped>
