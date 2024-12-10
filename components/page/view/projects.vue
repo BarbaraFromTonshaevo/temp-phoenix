@@ -147,6 +147,7 @@ function changeRegion(value) {
 // Изменить query параметр для сегмента
 function changeSegment(value) {
   if (value.value == "all") {
+    const query = { ...route.query }; // Создаем копию текущего query
     delete query.segment;
     router.push({
       path: route.path,
