@@ -29,7 +29,7 @@
           </ul>
         </nav>
         <div v-if="mainInfoStore.isReady" class="header__info">
-          <a :href="'tel:' + mainInfoStore.info.phone" class="header__phone"
+          <a :href="'tel:' + mainInfoStore.info.phone" class="header__phone" :class="{'header__phone--dark': appStateStore.headerIsTransparent}"
             >{{ mainInfoStore.info.phone }}
             <svg class="header__phone-svg">
               <use xlink:href="/icons/sprite.svg#phone" />
@@ -300,6 +300,20 @@ const isMenuActive = ref(false);
     fill: var(--icons-black);
     transition: fill var(--time);
   }
+  .header__phone--dark{
+    background-color: var(--btn-dark);
+    filter: blur(20);
+    .header__phone-svg{
+      fill: var(--icons-white);
+    }
+  }
+  .header__phone:hover{
+    background-color: var(--btn-primary);
+    .header__phone-svg{
+      fill: var(--icons-white);
+    }
+  }
+
 }
 @include laptop {
   .header__nav {
