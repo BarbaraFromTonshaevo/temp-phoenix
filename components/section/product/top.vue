@@ -18,6 +18,7 @@
             class="product-top__btn"
             mode="button"
             :size="isMobile ? 'large' : 'middle'"
+            @click="appStateStore.makeFeedbackActive()"
             >Получить расчет</ButtonBase
           >
         </div>
@@ -27,6 +28,8 @@
 </template>
 
 <script setup>
+import { useAppStateStore } from '~/stores/appState';
+const appStateStore = useAppStateStore();
 const { isMobile } = useDevice();
 defineProps({
   slides: {
