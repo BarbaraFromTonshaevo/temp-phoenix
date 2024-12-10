@@ -40,6 +40,7 @@ export const useAppStateStore = defineStore("appStateStore", {
     // работа с кастомным скролом
     setScrollbarBody(value) {
       this.scrollbarBody = value;
+      this.srollbarIsActive = true;
     },
     changeActive(value) {
       this.srollbarIsActive = value;

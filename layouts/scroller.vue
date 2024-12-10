@@ -66,6 +66,7 @@ onMounted(() => {
   });
 
   setScrollbar(bodyScrollBar);
+  appStateStore.setScrollbarBody(bodyScrollBar);
 
   gsap.registerPlugin(ScrollTrigger);
   setTimeout(() => {

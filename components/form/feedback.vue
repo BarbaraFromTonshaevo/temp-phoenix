@@ -59,13 +59,29 @@
 </template>
 
 <script setup>
-const emits = defineEmits(["sendForm"]);
+const emits = defineEmits(["success", "error"]);
 
 function sendForm(form) {
   const formJSON = form.data;
   formJSON["webform_id"] = "order";
   formJSON["send_target"] = document.title;
-  emits("sendForm", formJSON);
+  postForm(formJSON, form);
+}
+
+async function postForm(formJSON, form) {
+  // formJSON
+  // successCallback
+  // errorCallback
+  usePostForm(
+    formJSON,
+    () => {
+      emits("success");
+      form.reset();
+    },
+    (e) => {
+      emits("error", e);
+    }
+  );
 }
 </script>
 

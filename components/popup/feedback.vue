@@ -6,7 +6,11 @@
     >
       <div class="popup__content">
         <h2 class="popup__title">Оставить заявку</h2>
-        <FormFeedback @sendForm="postForm" class="form-feedback" />
+        <FormFeedback
+          @success="successAction"
+          @error="errorAction"
+          class="form-feedback"
+        />
       </div>
     </PopupBase>
   </Teleport>
@@ -16,25 +20,14 @@
 import { useAppStateStore } from "@/stores/appState";
 const appStateStore = useAppStateStore();
 
-// здесь выполнить обращение к апи
-// в случае успеха popupStore.makeThanksActive
-// в случае ошибки popupStore.makeErrorActive и передать message
+function successAction() {
+  appStateStore.makeFeedbackInactive();
+  appStateStore.makeSuccessActive();
+}
 
-async function postForm(formJSON) {
-  // formJSON
-  // successCallback
-  // errorCallback
-  usePostForm(
-    formJSON,
-    () => {
-      appStateStore.makeFeedbackInactive();
-      appStateStore.makeSuccessActive();
-    },
-    (e) => {
-      appStateStore.makeFeedbackInactive();
-      appStateStore.makeErrorActive(e);
-    }
-  );
+function errorAction(e) {
+  appStateStore.makeFeedbackInactive();
+  appStateStore.makeErrorActive(e);
 }
 </script>
 

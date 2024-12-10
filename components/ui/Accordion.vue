@@ -72,6 +72,7 @@ function toggleHead($event) {
 
 <style lang="scss" scoped>
 .accordion {
+  font-family: var(--font);
   border-top: 1px solid var(--stroke-primary);
   &__item {
     border-bottom: 1px solid var(--stroke-primary);
@@ -89,6 +90,7 @@ function toggleHead($event) {
     }
   }
   &__head {
+    font-family: inherit;
     width: 100%;
     cursor: pointer;
     padding: 30px;

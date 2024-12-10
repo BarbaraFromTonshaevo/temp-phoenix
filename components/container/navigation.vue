@@ -1,8 +1,8 @@
 <template>
   <div class="navigation-container">
     <div class="navigation-container__body">
-      <aside ref="asideNav" class="navigation-container__aside">
-        <nav class="navigation-container__nav">
+      <aside class="navigation-container__aside">
+        <nav class="navigation-container__nav" ref="asideNav">
           <ul class="navigation-container__list">
             <li
               v-for="section of navigationList"
@@ -25,7 +25,7 @@
         </nav>
       </aside>
       <div ref="mainNav" class="navigation-container__main">
-        <slot/>
+        <slot />
       </div>
     </div>
   </div>
@@ -50,21 +50,24 @@ const mainNav = ref(null);
 const asideNav = ref(null);
 
 onMounted(() => {
-  // const smoothScroll = inject("smoothScroll");
-  // scrollbarStore.body.addListener(({ offset }) => {
-  //   // asideNav.value.style.top = `calc(${offset.y}px + 20px)`;
-  //   console.log(offset.y);
-  // });
+  if (appStateStore.srollbarIsActive) {
+    appStateStore.scrollbarBody.addListener(({ offset }) => {
+      if (asideNav.value) {
+        asideNav.value.style.top = `calc(${offset.y}px + var(--header-main-gap) + var(--header-height))`;
+      }
+    });
+  }
 });
 
 function navigateSection(id) {
-  console.log(scrollbarStore.body);
   activeSection.value = id;
   const target = mainNav.value.querySelector(`#${id}`);
-  if (appStateStore.scrollbarIsActive) {
+  if (appStateStore.srollbarIsActive) {
     const y =
-      scrollbarStore.body.scrollTop + target.getBoundingClientRect().top - 120;
-    scrollbarStore.body.scrollTo(0, y, 500);
+      appStateStore.scrollbarBody.scrollTop +
+      target.getBoundingClientRect().top -
+      120;
+    appStateStore.scrollbarBody.scrollTo(0, y, 500);
   } else {
     const y = window.scrollY + target.getBoundingClientRect().top - 120;
     window.scrollTo({
