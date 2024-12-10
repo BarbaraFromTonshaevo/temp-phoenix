@@ -56,7 +56,7 @@
       <div class="footer__bottom">
         <div class="footer__copyright">©2024 ТМК Феникс</div>
         <a class="footer__policy" href="">Политика конфиденциальности</a>
-        <a class="footer__webshop" href="">
+        <a class="footer__webshop" href="https://webshop.ru/" target="_blank">
           Разработка сайта :
           <svg class="footer__webshop-svg">
             <use xlink:href="/icons/sprite.svg#webshop" />
@@ -149,10 +149,13 @@ const appStateStore = useAppStateStore();
   &__webshop {
     font-size: 16px;
     color: var(--text-footer);
+    transition: color var(--time);
   }
   &__webshop-svg {
     width: 70px;
     height: 12px;
+    fill: var(--icons-black);
+    transition: fill var(--time);
   }
 }
 @include hover {
@@ -160,6 +163,12 @@ const appStateStore = useAppStateStore();
   .footer__phone:hover,
   .footer__email:hover {
     color: var(--text-accent);
+  }
+  .footer__webshop:hover {
+    color: var(--text-accent);
+    .footer__webshop-svg {
+      fill: var(--icons-red);
+    }
   }
 }
 @include desktop {
