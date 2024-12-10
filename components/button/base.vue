@@ -8,7 +8,7 @@
     <slot />
   </NuxtLink>
   <a
-    v-else-if="mode === 'link'"
+    v-else-if="mode === 'a'"
     :href="link"
     :class="computedClasses"
     v-bind="$attrs"

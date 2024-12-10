@@ -55,9 +55,17 @@
       <div class="contacts__bottom">
         <div class="contacts__flex">
           <h3 class="title-h3">Реквизиты</h3>
-          <ButtonBase name="secondary" mode="a" link="#" size="large"
-            >Скачать карточку компании</ButtonBase
+          <ButtonBase
+            v-if="data.data.field_compaty_card.length > 0"
+            name="secondary"
+            mode="a"
+            :link="useDomain(data.data.field_compaty_card[0].url)"
+            size="large"
+            :download="data.data.field_compaty_card[0].mime"
+            target="_blank"
           >
+            Скачать карточку компании
+          </ButtonBase>
         </div>
         <div class="contacts__list">
           <UiDoubleStroke
@@ -91,7 +99,7 @@ const mapPoints = [
       iconImageHref: "/icons/point.svg",
       iconImageSize: [91, 125],
       iconImageOffset: [-45, -125],
-    }
+    },
   },
 ];
 </script>

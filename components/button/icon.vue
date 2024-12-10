@@ -10,7 +10,7 @@
     </svg>
   </NuxtLink>
   <a
-    v-else-if="mode === 'link'"
+    v-else-if="mode === 'a'"
     :href="link"
     v-bind="$attrs"
     :class="computedClasses"
