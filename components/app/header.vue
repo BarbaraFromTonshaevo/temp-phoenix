@@ -3,7 +3,7 @@
     class="header"
     :class="[
       { 'header--hidden': appStateStore.headerIsHidden },
-      { 'header--transparent': appStateStore.headerIsTransparent },
+      { 'header--transparent': appStateStore.headerIsTransparent && !isMenuActive },
     ]"
   >
     <div class="header__body">
@@ -29,7 +29,7 @@
           </ul>
         </nav>
         <div v-if="mainInfoStore.isReady" class="header__info">
-          <a :href="'tel:' + mainInfoStore.info.phone" class="header__phone" :class="{'header__phone--dark': appStateStore.headerIsTransparent}"
+          <a :href="'tel:' + mainInfoStore.info.phone" class="header__phone" :class="{'header__phone--dark': appStateStore.headerIsTransparent && !isMenuActive }"
             >{{ mainInfoStore.info.phone }}
             <svg class="header__phone-svg">
               <use xlink:href="/icons/sprite.svg#phone" />
@@ -40,13 +40,13 @@
               sprite="telegram"
               mode="a"
               :link="mainInfoStore.info.telegram"
-              :name="appStateStore.headerIsTransparent ? 'dark' : 'normal'"
+              :name="appStateStore.headerIsTransparent && !isMenuActive ? 'dark' : 'normal'"
             />
             <ButtonIcon
               sprite="wa"
               mode="a"
               :link="mainInfoStore.info.whatsapp"
-              :name="appStateStore.headerIsTransparent ? 'dark' : 'normal'"
+              :name="appStateStore.headerIsTransparent && !isMenuActive ? 'dark' : 'normal'"
             />
           </div>
           <ButtonBase
