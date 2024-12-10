@@ -21,7 +21,7 @@
             :title="data.service_info.title"
             :text="data.service_info.description"
             :img="data.service_info.image"
-            url="/services"
+            :url="data.links.link_services.href"
           />
         </li>
       </ul>

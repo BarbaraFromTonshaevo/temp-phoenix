@@ -1,12 +1,21 @@
 <template>
     <section class="product-services">
         <h2 class="product-services__title title-h3"><strong>Бесплатное проектирование склада или ангара.</strong> Узнайте поэтапный план работы над вашим будущим проектом</h2>
-        <ButtonBase name="secondary"  class="product-services__btn" size="large" mode="nuxt-link" link="/services">Перейти к услугам</ButtonBase>
+        <ButtonBase name="secondary"  class="product-services__btn" size="large" mode="nuxt-link" :link="servicesLink">Перейти к услугам</ButtonBase>
         <div class="product-services__img">
             <img src="/images/product.png" alt="">
         </div>
     </section>
 </template>
+
+<script setup>
+defineProps({
+    servicesLink: {
+        type: String,
+        default: '#'
+    }
+})
+</script>
 
 <style lang="scss">
 .product-services{

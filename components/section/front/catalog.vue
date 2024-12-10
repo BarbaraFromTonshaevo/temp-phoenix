@@ -11,7 +11,7 @@
           name="secondary"
           size="large"
           mode="nuxt-link"
-          link="/catalog"
+          :link="catalogLink"
           >Перейти в каталог</ButtonBase
         >
       </div>
@@ -53,6 +53,10 @@ defineProps({
     required: true,
     default: () => {},
   },
+  catalogLink: {
+    type: String,
+    default: '#',
+  }
 });
 </script>
 

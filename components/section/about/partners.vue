@@ -13,8 +13,8 @@
         </li>
       </ul>
       <div class="about-partners__links">
-        <ButtonBase name="tertiary" class="about-partners__link" mode="nuxt-link" link="/catalog">Каталог</ButtonBase>
-        <ButtonBase name="tertiary" class="about-partners__link" mode="nuxt-link" link="/contacts">Контакты</ButtonBase>
+        <ButtonBase name="tertiary" class="about-partners__link" mode="nuxt-link" :link="catalogLink">Каталог</ButtonBase>
+        <ButtonBase name="tertiary" class="about-partners__link" mode="nuxt-link" :link="contactsLink">Контакты</ButtonBase>
       </div>
     </div>
   </section>
@@ -26,7 +26,15 @@ defineProps({
     type: Array,
     required: true,
     default: ()=>[]
-  }
+  },
+  catalogLink: {
+    type: String,
+    default: '#'
+  },
+  contactsLink: {
+    type: String,
+    default: '#'
+  },
 })
 </script>
 

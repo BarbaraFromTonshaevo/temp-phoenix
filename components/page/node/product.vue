@@ -16,7 +16,10 @@
         id="characteristics"
         :properties="data.data.field_chars"
       />
-      <SectionProductServices id="services" />
+      <SectionProductServices
+        id="services"
+        :services-link="data.links.link_services.href"
+      />
       <SectionProductBenefits
         id="benefits"
         :properties="data.data.field_advantages_text"
