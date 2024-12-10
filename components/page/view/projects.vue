@@ -105,6 +105,7 @@ onMounted(() => {
     `[data-switch="${activeBlock.value}"]`
   );
   activeElem.classList.add("projects__wrap--active");
+  console.log(activeElem.clientHeight);
   wrapper.value.style.height = activeElem.clientHeight + "px";
 });
 
@@ -233,6 +234,7 @@ onUpdated(() => {
     top: 0;
     left: 0;
     width: 100%;
+    height: fit-content;
     opacity: 0;
     visibility: hidden;
     transition: opacity var(--time), visibility var(--time);

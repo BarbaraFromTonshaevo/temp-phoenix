@@ -53,7 +53,9 @@ let placemarks = [];
 
 onMounted(() => {
   if (mapStore.isMapLoaded) {
-    initMap();
+    setTimeout(() => {
+      initMap();
+    }, 1000);
   } else {
     const script = document.createElement("script");
     script.src = useRuntimeConfig().public.yandexApi;
@@ -73,6 +75,7 @@ onUpdated(() => {
 
 // инициализация карты
 async function initMap() {
+  console.log(map);
   const mapDOM = document.getElementById(props.mapId);
   if (mapDOM && mapDOM.innerHTML == "") {
     map = new ymaps.Map(
@@ -84,7 +87,7 @@ async function initMap() {
       },
       { suppressMapOpenBlock: true }
     );
-
+    console.log(map);
     if (props.isClusterer) {
       clusterer = new ymaps.Clusterer({
         preset: "islands#invertedRedClusterIcons",

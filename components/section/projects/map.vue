@@ -152,7 +152,7 @@ const zoomProjects = 4;
 .projects-map {
   display: flex;
   width: 100%;
-  aspect-ratio: 1920/898;
+  height: 46vw;
   background-color: var(--bg-secondary);
   background-size: cover;
   &__body {
@@ -163,13 +163,11 @@ const zoomProjects = 4;
 
 @include tablet {
   .projects-map {
-    aspect-ratio: initial;
     height: 50vh;
   }
 }
 @include mobile {
   .projects-map {
-    aspect-ratio: initial;
     height: 70vh;
   }
 }
